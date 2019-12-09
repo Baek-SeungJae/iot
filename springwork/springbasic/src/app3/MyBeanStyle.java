@@ -1,8 +1,12 @@
 package app3;
 
 public abstract class  MyBeanStyle {
-	MyBeanStyle() {
-	}
-	abstract void hello(String name);
+	public abstract void hello(String name);
 	
+	public void myInit() {
+		System.out.println("init....");
+	}
+	public void myDestroy() {
+		System.out.println("destory....");
+	}
 }

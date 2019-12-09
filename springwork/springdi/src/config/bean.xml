@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- bean(객체)을 생성할 수 있도록 정보를 정의 -->
+	<bean id="tv" class="dl.exam01.SamsungTV"/>
+	<!-- <bean id="tv" class="dl.exam01.LgTV"/> -->
+	
+	<bean id="mydao" class="dl.constructor.basic.MemberDAO"/>
+	
+	<bean id="insa" class="dl.constructor.basic.InsaImpl">
+		<constructor-arg ref="mydao"/>
+	</bean>
+	
+	<bean id="dice" class="dl.constructor01.Dice"/>
+	<bean id="player" class="dl.constructor01.Player">
+		<constructor-arg ref="dice"/>
+	</bean>
+</beans>
