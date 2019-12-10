@@ -12,7 +12,7 @@
 	<div class="container" style="margin:0; padding: 0; width:100%; max-width: 100%;">
     <div class="row">
         <div class="col-md-12">
-          <h5 class="" > <a href="http://70.12.115.80:8088/serverweb/project/homeupside4.jsp"><img id=minilogo alt="" src="http://70.12.115.80:8088/serverweb/projectimages/damoimlogo.png" style="width:80px; height: 50px;">다모임</a></h5>
+          <h5 class="" > <a href=""><img id=minilogo alt="" src="http://70.12.115.80:8088/serverweb/projectimages/damoimlogo.png" style="width:80px; height: 50px;">다모임</a></h5>
         </div>
       </div>
         <div class="row">
@@ -49,9 +49,9 @@
         <div class="col-md-2"></div>
         <div class="col-md-2"></div>
         	<ul class="nav nav-pills">
-					<li class="nav-item"><a href="http://70.12.224.117:8088/damoim/html/home.jsp" class="active nav-link">홈</a></li>
-					<li class="nav-item"><a href="http://70.12.224.117:8088/damoim/html/board.jsp" class="nav-link" >게시판</a></li>
-					<li class="nav-item"><a href="http://70.12.230.200:8088/damoim/NewStart/main.html" class="nav-link">일정</a></li>
+					<li class="nav-item"><a href="./so_home.jsp" class="active nav-link">홈</a></li>
+					<li class="nav-item"><a href="./so_board.jsp" class="nav-link" >게시판</a></li>
+					<li class="nav-item"><a href="./so_cal_main.html" class="nav-link">일정</a></li>
 			</ul>
         <div class="col-md-2"></div>
       </div>
@@ -64,7 +64,7 @@
               <li data-target="#carouselExampleIndicators" data-slide-to="2"> </li>
             </ol>
             <div class="carousel-inner">
-              <div class="carousel-item active"> <img class="d-block img-fluid w-100" src="http://70.12.115.80:8088/serverweb/moimimages/main.jpg">
+              <div class="carousel-item active"> <img class="d-block img-fluid w-100" src="./so_main.html">
                 <div class="carousel-caption">
                   <h5 class="m-0">Carousel</h5>
                   <p>with indicators</p>
@@ -232,8 +232,5 @@
 			<div class="col-xl-12" style="background-color: black; height: 200px;">상단 head</div>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
