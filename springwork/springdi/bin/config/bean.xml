@@ -16,4 +16,12 @@
 	<bean id="player" class="dl.constructor01.Player">
 		<constructor-arg ref="dice"/>
 	</bean>
+	
+	<!-- 
+	<bean id="dbms" class="di.constructor03.MysqlArticleDAO"/>
+	 -->
+	<bean id="dbms" class="di.constructor03.OracleArticleDAO"/>
+	<bean id="writearticlemgr" class="di.constructor03.WriteArticleMgr">
+		<constructor-arg ref="dbms"/>
+	</bean>
 </beans>
