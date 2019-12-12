@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="collection" class="di.etc.CollectionTest">
+		<property name="list">
+			<list>
+				<value>hadoop</value>
+				<value>hive</value>
+				<value>R</value>
+				<value>android</value>
+				<value>mongodb</value>
+			</list>
+		</property>
+		<property name="map">
+			<map>
+				<entry>
+					<key>
+						<value>db</value>
+					</key>
+					<value>mongodb</value>
+				</entry>
+				<entry key="bigdata1" value="hadoop"></entry>
+				<entry key="bigdata2" value="hive"></entry>
+				<entry key="bigdata3" value="sqoop"></entry>
+				<entry key="bigdata4" value="flume"></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id = "con1" class="di.etc.ConstructorTest">
+		<constructor-arg value="100" type="long" index="1"/>
+		<constructor-arg value="200" type="long" index="0"/>
+	</bean>
+	
+</beans>

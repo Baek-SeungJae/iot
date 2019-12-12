@@ -12,8 +12,8 @@
 		<constructor-arg ref="mydao"/>
 	</bean>
 	
-	<bean id="dice" class="dl.constructor01.Dice"/>
-	<bean id="player" class="dl.constructor01.Player">
+	<bean id="dice" class="di.constructor01.Dice"/>
+	<bean id="player" class="di.constructor01.Player">
 		<constructor-arg ref="dice"/>
 	</bean>
 	
@@ -24,4 +24,6 @@
 	<bean id="writearticlemgr" class="di.constructor03.WriteArticleMgr">
 		<constructor-arg ref="dbms"/>
 	</bean>
+
+	
 </beans>
