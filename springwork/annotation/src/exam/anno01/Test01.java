@@ -2,6 +2,8 @@ package exam.anno01;
 
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.stereotype.Component;
+
 
 public class Test01 {
 	public static void main(String[] args) {
