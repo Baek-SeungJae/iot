@@ -11,4 +11,5 @@
 		@service => 일반 객체 (서비스 객체를 등록)
 	 -->
 	<context:component-scan base-package="exam"/>
+	<context:component-scan base-package="book.exam.constructor"/>
 </beans>

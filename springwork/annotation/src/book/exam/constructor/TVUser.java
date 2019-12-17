@@ -17,7 +17,7 @@ public class TVUser {
 		 */
 		AbstractApplicationContext factory = 
 			new GenericXmlApplicationContext("/config/bean.xml");
-		TV tv = factory.getBean("tv",TV.class);
+		TV tv = factory.getBean("samsung",TV.class);
 		tv.turnOn();
 		tv.soundUp();
 		tv.soundDown();
