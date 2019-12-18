@@ -22,7 +22,5 @@ public class TVUser {
 		tv.soundUp();
 		tv.soundDown();
 		tv.turnOff();
-	
 	}
-
 }
