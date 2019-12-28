@@ -1,0 +1,29 @@
+1. Dynamic Web Project 생성
+2. 라이브러리를 lib 폴더에 복사하기
+3. DispatcherServlet을 web.xml에 등록
+	=> 모든 요청이 DispathcerServlet을 통해 진입하도록 설정해야 스프링이 제공하는 여러가지 기능을 적용할 수 있다.(frontController패턴이 적용되어 있다.)
+
+4. spring에서 사용할 설정파일을 작성한다.
+	따로 등록하지 않으면 web프로젝트에서 사용할 스프링설정 파일은 파일명을 작성할 때 규칙이 있다.
+	[DispatcherServlet을 등록한 서블릿명-servlet.xml
+	서블릿명 : springapp
+	/WEB-INF/
+		+
+		|_ springapp-servlet.xml
+
+
+5. Controller 작성하기
+	- 기본 web에서 서블릿과 같은 역할을 하는 클래스
+	- 실제 처리를 담당하는 클래스
+	
+6. 스프링설정파일에 컨트롤러 등록하기
+	<bean>태그를 이용해서 5번에서 생성한 컨트롤러 등록하기
+	요청path를 기준으로 컨트롤러를 등록할 것이므로 id속성을 쓰지 않고 name속성을 사용한다.
+	DispatcherServlet 내부에서 요청path에 맞는 컨트롤러를 getBean할 수 있도록 등록
+		
+	[형식]
+	<bean name="요청path" class="컨트롤러 클래스"/>
+	[예제]
+	/test.do로 TestController를 요청
+	<bean name="/test.do" class="TestController"/>
+	
