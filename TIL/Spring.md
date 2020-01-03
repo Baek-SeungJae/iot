@@ -102,7 +102,13 @@
 >  => 빈의 이름을 myplayer로 추가하고싶다면 @serviece("myplayer")
 >  => 등록한 빈의 이름은 lookup하거나 의존성 주입할 때 사용한다.
 
+## 4. MVC 프레임워크
 
+> - model
+> - view
+> - controller
+>
+> front 
 
 
 

@@ -23,7 +23,7 @@ public class TestController implements Controller {
 		mav.addObject("msg", "스프링컨트롤러에서 넘긴 데이터");
 		
 		//forward할 뷰의 정보를 정의 - 기본이  forward이다.
-		mav.setViewName("/WEB-INF/test/result.jsp");
+		mav.setViewName("test/result");
 		return mav;
 	}
 
