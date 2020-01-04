@@ -21,39 +21,17 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-      </div>
-       <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-2"></div>
         <div class="col-md-2"></div>
         <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
+        <div class="col-md-4" align="right">
         	<ul class="nav nav-pills">
 					<li class="nav-item"><a href="./so_home.jsp" class="active nav-link">홈</a></li>
 					<li class="nav-item"><a href="./so_board.jsp" class="nav-link" >게시판</a></li>
 					<li class="nav-item"><a href="./so_cal_main.html" class="nav-link">일정</a></li>
 			</ul>
-        <div class="col-md-2"></div>
+        </div>
       </div>
         <div class="row">
         <div class="col-md-12">

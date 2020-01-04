@@ -6,81 +6,77 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
 <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+<style type="text/css">
+.container-fluid{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+</style>
 </head>
 <body class="">
 	<!-- 상단 head 시작 -->
-
-    <div class="container" style="margin:0; padding: 0; width:100%; max-width: 100%;">
-    <div class="row">
-        <div class="col-md-12">
-          <h5 class="" > <a href="http://70.12.115.80:8088/serverweb/project/homeupside4.jsp"><img id=minilogo alt="" src="http://70.12.115.80:8088/serverweb/projectimages/damoimlogo.png" style="width:80px; height: 50px;">다모임</a></h5>
-        </div>
-      </div>
-        <div class="row">
-        <div class="col-md-12">
-          <h1 class="display-2" style="text-align: center;"><img alt="" src="http://70.12.115.80:8088/serverweb/moimimages/brush.png">스윗드로잉</h1>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-      </div>
-       <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-        	<ul class="nav nav-pills">
-					<li class="nav-item"><a href="http://70.12.224.117:8088/damoim/html/home.jsp" class="nav-link">홈</a></li>
-					<li class="nav-item"><a href="http://70.12.224.117:8088/damoim/html/board.jsp" class="active nav-link" >게시판</a></li>
-					<li class="nav-item"><a href="http://70.12.230.200:8088/damoim/NewStart/main.html" class="nav-link">일정</a></li>
-			</ul>
-        <div class="col-md-2"></div>
-      </div>
-        <div class="row">
-        <div class="col-md-12">
-          <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"> </li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="1"> </li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="2"> </li>
-            </ol>
-            <div class="carousel-inner">
-              <div class="carousel-item active"> <img class="d-block img-fluid w-100" src="http://70.12.115.80:8088/serverweb/moimimages/main.jpg">
-                <div class="carousel-caption">
-                  <h5 class="m-0">Carousel</h5>
-                  <p>with indicators</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-	
-	
-	
-	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12">
+				<h5 class="">
+					<a href="http://70.12.115.80:8088/serverweb/project/homeupside4.jsp"><img id=minilogo alt="" src="http://70.12.115.80:8088/serverweb/projectimages/damoimlogo.png" style="width: 80px; height: 50px;">다모임</a>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-12">
+				<h1 class="display-2" style="text-align: center;">
+					<img alt="" style="width: 12%;" src="./images/brush.png">스윗드로잉
+				</h1>
+				<br />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-9"></div>
+			<div class="col-xl-3">
+				<ul class="nav nav-pills">
+					<li class="nav-item" style="width: 33.3%; text-align: center;"><a href="http://70.12.224.117:8088/damoim/html/home.jsp" class="active nav-link">홈</a></li>
+					<li class="nav-item" style="width: 33.3%; text-align: center;"><a href="http://70.12.224.117:8088/damoim/html/board.jsp" class="nav-link">게시판</a></li>
+					<li class="nav-item" style="width: 33.3%; text-align: center;"><a href="http://70.12.230.200:8088/damoim/NewStart/main.html" class="nav-link">일정</a></li>
+				</ul>
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-xl-12">
+				<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+					</ol>
+					<div class="carousel-inner" style="height: 300px;">
+						<div class="carousel-item active">
+							<img class="d-block img-fluid w-100" src="./images/5.jpg">
+							<div class="carousel-caption">
+								<h5 class="m-0">Carousel</h5>
+								<p>with indicators</p>
+							</div>
+						</div>
+						<div class="carousel-item ">
+							<img class="d-block img-fluid w-100" src="./images/5.jpg">
+							<div class="carousel-caption">
+								<h5 class="m-0">Carousel</h5>
+								<p>with indicators</p>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img class="d-block img-fluid w-100" src="./images/5.jpg">
+							<div class="carousel-caption">
+								<h5 class="m-0">Carousel</h5>
+								<p>with indicators</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- 상단 head 끝 -->
 	<br />
 	<br />
@@ -183,6 +179,10 @@
 						</table>
 					</div>
 					<!-- 게시물 끝 -->
+					<div class="col-xl-10"></div>
+					<div class="col-xl-2">
+						<button type="button" class="btn btn-primary btn-block" value="all">글쓰기</button>
+					</div>
 					<div class="col-xl-12">
 						<ul class="pagination justify-content-center">
 							<li class="page-item"><a class="page-link" href="#"> <span>«</span></a></li>
