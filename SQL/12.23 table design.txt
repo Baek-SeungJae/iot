@@ -1,0 +1,100 @@
+drop table TB_ORDER_PRODUCT;
+drop table TB_ORDER;
+drop table TB_PRODUCT;
+drop table TB_MEM;
+
+
+create table TB_MEM(
+	MEM_ID varchar2(15) primary key,
+	MEM_NM varchar2(10), 
+	MEM_CD varchar2(10),
+	PWD varchar2(20) not null, 
+	PWD_HINT varchar(20) not null, 
+	PWD_HINT_ANS varchar(20) not null, 
+	SSN char(13) not null, 
+	BIRTH_DT char(8), 
+	MALE_FLG char(1) not null, 
+	TEL_NO varchar2(13), 
+	CELL_NO varchar2(13), 
+	ADDR varchar2(100) not null, 
+	EMAIL varchar(30), 
+	EMAIL_RCV_FLG char(1), 
+	MEM_REG_DTM char(16));
+
+alter table TB_MEM
+add constraint ssn_uniq unique(SSN)
+add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+
+create table TB_PRODUCT(
+	PRD_NO char(12) primary key, 
+	PRD_NM varchar2(30), 
+	CATEGORY_NO char(12), 
+	PRD_DES varchar2(200), 
+	SELL_PRC_UNIT integer, 
+	SELL_START_DT char(16), 
+	SELL_END_DT char(16), 
+	DLV_CONSTRAINT varchar2(50), 
+	AS_FLG char(1), 
+	RETURN_FLG char(1), 
+	IMG_ORG_FILE_NM varchar2(50), 
+	IMG_GEN_FILE_NM varchar2(50), 
+	REG_ID varchar2(20), 
+	REG_DTM char(16));
+
+
+create table TB_ORDER(
+	ORD_NO char(15) primary key,
+	MEM_ID varchar2(15) not null,
+	ORD_AMT integer not null,
+	RCVR_NM varchar2(10) not null,
+	RCVR_TEL_NO varchar2(13) not null,
+	RCVR_ADDR varchar2(100) not null,
+	DLV_CORP_NO varchar2(13) not null,
+	DLV_REQ varchar2(50) not null,
+	ORD_STAT_CD char(3) not null,
+	ORD_DTM char(16) not null);
+
+alter table TB_ORDER
+add constraint ord_mem_kf foreign key(MEM_ID)
+	references TB_MEM(MEM_ID);
+
+
+
+create table TB_ORDER_PRODUCT(
+	ORD_NO char(15),
+	PRD_NO char(12),
+	QTY integer);
+
+alter table TB_ORDER_PRODUCT
+add constraint ordp_mem_kf foreign key(ORD_NO)
+	references TB_ORDER(ORD_NO)
+add constraint prdp_mem_kf foreign key(PRD_NO)
+	references TB_PRODUCT(PRD_NO);
+
+CREATE SEQUENCE ORD_NO_SEQ
+ INCREMENT BY 1
+ START WITH 0001
+ MINVALUE   0001
+ MAXVALUE   9999
+ CYCLE
+ CACHE 1000
+ ORDER;
+
+
+
+INSERT ALL
+INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM) 
+values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'user01', 195000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', '11ST', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 3)
+INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 2)
+select * from dual;
+
+
+INSERT ALL
+INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM) 
+values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'admin01', 288000, '관리자', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'COOPANG', '부재시 연락 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000003', 3)
+INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 1)
+INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 5)
+select * from dual;
+

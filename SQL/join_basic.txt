@@ -1,0 +1,195 @@
+/* join 연습 */
+--문제1
+select e.empno, e.ename, e.sal, d.dname, d.loc_code
+from emp e, dept d
+where e.deptno = d.deptno and e.job='SALESMAN'
+;
+
+--문제2
+select e.ename, d.dname, e.sal, l.city
+from emp e, dept d, locations l
+where e.deptno = d.deptno and d.loc_code = l.loc_code
+;
+
+--문제3
+select e.ename, e.job, e.hiredate, e.comm
+from emp e, dept d, locations l
+where l.city='DALLAS' and e.sal>=1500  and e.deptno = d.deptno and d.loc_code = l.loc_code
+;
+
+--문제4
+select e.empno, e.ename, e.job, e.deptno, d.deptno, d.dname
+from emp e, dept d
+where e.deptno=d.deptno
+;
+
+--문제5
+select d.deptno, d.dname, l.city
+from dept d, locations l
+where d.loc_code = l.loc_code
+;
+
+
+/* hr/hr */
+
+EMPLOYEES	DEPARTMENTS		JOBS		LOCATIONS	COUNTRIES 	JOB_HISTORY	REGIONS
+
+EMPLOYEE_ID	DEPARTMENT_ID		JOB_ID		LOCATION_ID	COUNTRY_ID	EMPLOYEE_ID	REGION_ID
+FIRST_NAME	DEPARTMENT_NAME	JOB_TITLE	STREET_ADDRESS	COUNTRY_NAME	START_DATE	REGION_NAME
+LAST_NAME	MANAGER_ID		MIN_SALARY	POSTAL_CODE	REGION_ID	END_DATE	
+EMAIL		LOCATION_ID		MAX_SALARY	CITY				JOB_ID		
+PHONE_NUMBER						STATE_PROVINCE			DEPARTMENT_ID	
+HIRE_DATE						COUNTRY_ID	
+JOB_ID
+SALARY
+COMMISSION_PCT
+MANAGER_ID
+DEPARTMENT_ID
+
+
+/* hr계정 join 연습 */
+--문제1
+select d.DEPARTMENT_NAME, count(e.EMPLOYEE_ID)
+from EMPLOYEES e, DEPARTMENTS d
+where e.DEPARTMENT_ID=d.DEPARTMENT_ID
+group by d.DEPARTMENT_NAME
+;
+
+--문제2
+select e.FIRST_NAME ||' ' ||e.LAST_NAME ||'의 연봉은 '||  e.SALARY || '입니다.'
+from EMPLOYEES e, DEPARTMENTS d
+where e.DEPARTMENT_ID=d.DEPARTMENT_ID and d.DEPARTMENT_NAME='IT'
+order by SALARY
+;
+
+--문제3
+select e.EMPLOYEE_ID, e.FIRST_NAME, j.JOB_TITLE, d.DEPARTMENT_NAME
+from EMPLOYEES e, DEPARTMENTS d, JOBS j, LOCATIONS l
+where e.DEPARTMENT_ID=d.DEPARTMENT_ID and d.LOCATION_ID=l.LOCATION_ID and e.JOB_ID=j.JOB_ID and l.CITY='Seattle'
+;
+
+
+/* hr계정 join 연습 */
+--문제1
+select j.JOB_TITLE as "JOB" , sum(e.SALARY) as "급여"
+from EMPLOYEES e, JOBS j
+where e.JOB_ID = j.JOB_ID and JOB_TITLE not like '%Representative'
+group by JOB_TITLE
+having sum(e.SALARY)>30000
+order by sum(e.SALARY)
+;
+
+--문제2
+select d.DEPARTMENT_NAME as "부서명", count(e.EMPLOYEE_ID) as "인원수"
+from EMPLOYEES e, DEPARTMENTS d
+where e.DEPARTMENT_ID = d.DEPARTMENT_ID
+	and e.HIRE_DATE<'2005/01/01'
+group by d.DEPARTMENT_NAME
+;
+
+--문제3
+select 	d.DEPARTMENT_ID as "부서번호", 
+	d.DEPARTMENT_NAME as "부서명", 
+	count(e.EMPLOYEE_ID) as "인원수", 
+	max(e.SALARY) as "최고급여",
+	min(e.SALARY) as "최저급여",
+	floor(avg(e.SALARY)) as "평균급여",
+	sum(e.SALARY) as "급여총액"
+from 	EMPLOYEES e, DEPARTMENTS d, JOBS j
+where 	e.DEPARTMENT_ID = d.DEPARTMENT_ID
+group by d.DEPARTMENT_NAME , d.DEPARTMENT_ID
+having 	count(e.EMPLOYEE_ID) >=3
+order by count(e.EMPLOYEE_ID) desc
+;
+
+/* outer join */
+--[실습예제1]
+select d.dname, count(e.ename)
+from emp e, dept d
+where e.deptno = d.deptno(+)
+group by d.dname
+;
+
+--[실습예제2]
+select nvl(d.dname,'신입사원'), count(e.ename)
+from emp e, dept d
+where e.deptno = d.deptno(+)
+group by d.dname
+;
+
+--[실습예제3]
+select m.ename as "관리자명", count(e.ename) as "인원수"
+from emp m, emp e
+where e.mgr = m.empno
+group by m.ename
+;
+
+/* sub query */
+--실습1
+SELECT ename, sal
+from emp
+where sal>(select avg(sal)
+           from emp)
+;
+
+--실습2
+select ename, job, hiredate
+from emp
+where job=(select job
+           from emp
+           where ename='SMITH')
+;
+
+/* 단일행 sub query */
+--1번
+select ename, empno
+from emp
+where deptno in (select deptno
+		from emp
+		where ename like '%T%')
+;
+
+--2번
+select ename, empno, sal
+from emp
+where sal>(select max(sal)
+	from emp
+	where deptno = 20)
+;
+
+--3번
+select ename, hiredate, sal
+from emp
+where sal > (select avg(sal)
+	from emp
+	where hiredate like '82%')
+;
+
+
+select ename, deptno, sal, hiredate
+from emp
+where (deptno, sal) in(select deptno, min(sal)
+	from emp
+	group by deptno)
+;
+
+
+select ename, deptno, sal
+from emp e1
+where sal>(select avg(sal)
+	from emp e2
+	where e2.deptno = e1.deptno)
+;
+
+select e.ename, e.deptno, sal
+from (select deptno, avg(sal) as vavg
+	from emp
+	group by deptno) da , emp e
+where e.deptno=da.deptno and sal > vavg
+;
+
+
+
+
+
+

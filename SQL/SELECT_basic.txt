@@ -1,0 +1,128 @@
+SQL> SELECT * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10
+      7788 SCOTT                ANALYST                  7566 82/12/09       3000                    20
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30
+      7876 ADAMS                CLERK                    7788 83/01/12       1100                    20
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10
+
+14 rows selected.
+
+SQL> --1번
+SQL> SELECT ename||' : ' ||job
+  2  from emp
+  3  where hiredate >= '81/01/01' and hiredate <'82/01/01' and job='MANAGER';
+
+ENAME||':'||JOB
+--------------------------------------------
+JONES : MANAGER
+BLAKE : MANAGER
+CLARK : MANAGER
+
+SQL> --2번
+SQL> SELECT empno, ename, job, sal
+  2  from emp
+  3  where job='SALESMAN' and sal>=1500;
+
+     EMPNO ENAME                JOB                       SAL
+---------- -------------------- ------------------ ----------
+      7499 ALLEN                SALESMAN                 1600
+      7844 TURNER               SALESMAN                 1500
+
+SQL> --3번
+SQL> SELECT empno, ename, sal
+  2  from emp
+  3  where sal between 2000 and 3000
+  4  order by sal desc;
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7902 FORD                       3000
+      7788 SCOTT                      3000
+      7566 JONES                      2975
+      7698 BLAKE                      2850
+      7782 CLARK                      2450
+
+SQL> --4번
+SQL> SELECT empno, ename, sal, hiredate
+  2  from emp
+  3  where sal>=5000 or hiredate>='82/01/01';
+
+     EMPNO ENAME                       SAL HIREDATE
+---------- -------------------- ---------- --------
+      7788 SCOTT                      3000 82/12/09
+      7839 KING                       5000 81/11/17
+      7876 ADAMS                      1100 83/01/12
+      7934 MILLER                     1300 82/01/23
+
+SQL> --5번
+SQL> select ename, sal, deptno
+  2  from emp
+  3  where deptno in (10, 20) and sal>=2000;
+
+ENAME                       SAL     DEPTNO
+-------------------- ---------- ----------
+JONES                      2975         20
+CLARK                      2450         10
+SCOTT                      3000         20
+KING                       5000         10
+FORD                       3000         20
+
+SQL> --6번
+SQL> select ename, sal, deptno
+  2  from emp
+  3  where sal between 1300 and 1700;
+
+ENAME                       SAL     DEPTNO
+-------------------- ---------- ----------
+ALLEN                      1600         30
+TURNER                     1500         30
+MILLER                     1300         10
+
+SQL> --7번
+SQL> select empno, ename, job, sal, hiredate
+  2  from emp
+  3  where empno in (7902, 7788, 7566);
+
+     EMPNO ENAME                JOB                       SAL HIREDATE
+---------- -------------------- ------------------ ---------- --------
+      7566 JONES                MANAGER                  2975 81/04/02
+      7788 SCOTT                ANALYST                  3000 82/12/09
+      7902 FORD                 ANALYST                  3000 81/12/03
+
+SQL> --8번
+SQL> select empno, ename, job, sal, hiredate, deptno
+  2  from emp
+  3  where sal>=2800 and job='MANAGER';
+
+     EMPNO ENAME                JOB                       SAL HIREDATE     DEPTNO
+---------- -------------------- ------------------ ---------- -------- ----------
+      7566 JONES                MANAGER                  2975 81/04/02         20
+      7698 BLAKE                MANAGER                  2850 81/05/01         30
+
+SQL> --9번
+SQL> select empno, ename, job, sal, deptno
+  2  from emp
+  3  where job not in ('MANAGER', 'CLERK', 'ANALYST');
+
+     EMPNO ENAME                JOB                       SAL     DEPTNO
+---------- -------------------- ------------------ ---------- ----------
+      7499 ALLEN                SALESMAN                 1600         30
+      7521 WARD                 SALESMAN                 1250         30
+      7654 MARTIN               SALESMAN                 1250         30
+      7839 KING                 PRESIDENT                5000         10
+      7844 TURNER               SALESMAN                 1500         30

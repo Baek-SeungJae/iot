@@ -1,0 +1,3601 @@
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 12월 23 09:25:20 2019
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> conn scott/tiger
+Connected.
+SQL> set linesize 300;
+SQL> select * from tab;
+
+TNAME                                                        TABTYPE         CLUSTERID
+------------------------------------------------------------ -------------- ----------
+COUNTDATA                                                    VIEW
+CUSTOMER                                                     TABLE
+DEPT                                                         TABLE
+EMP                                                          TABLE
+FACTORY                                                      TABLE
+LOCATIONS                                                    TABLE
+MEMBER                                                       TABLE
+PRODUCT                                                      TABLE
+SALGRADE                                                     TABLE
+STORE                                                        TABLE
+TEST                                                         TABLE
+
+11 rows selected.
+
+SQL> desc member
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ ID                                                                                                                                                                                     VARCHAR2(10)
+ PASS                                                                                                                                                                                   VARCHAR2(10)
+ ADDR                                                                                                                                                                                   VARCHAR2(20)
+
+SQL> alter table member
+  2  add (point number , name varchar2(20), email.varchar2(20));
+add (point number , name varchar2(20), email.varchar2(20))
+                                            *
+ERROR at line 2:
+ORA-01748: only simple column names allowed here
+
+
+SQL> add (point number , name varchar2(20), email varchar2(20));
+SP2-0734: unknown command beginning "add (point..." - rest of line ignored.
+SQL> alter table member
+  2  add (point number , name varchar2(20), email varchar2(20));
+
+Table altered.
+
+SQL> desc member
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ ID                                                                                                                                                                                     VARCHAR2(10)
+ PASS                                                                                                                                                                                   VARCHAR2(10)
+ ADDR                                                                                                                                                                                   VARCHAR2(20)
+ POINT                                                                                                                                                                                  NUMBER
+ NAME                                                                                                                                                                                   VARCHAR2(20)
+ EMAIL                                                                                                                                                                                  VARCHAR2(20)
+
+SQL> alter table member
+  2  add(tel varchar2(15), info varchar2(10));
+
+Table altered.
+
+SQL> desc member
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ ID                                                                                                                                                                                     VARCHAR2(10)
+ PASS                                                                                                                                                                                   VARCHAR2(10)
+ ADDR                                                                                                                                                                                   VARCHAR2(20)
+ POINT                                                                                                                                                                                  NUMBER
+ NAME                                                                                                                                                                                   VARCHAR2(20)
+ EMAIL                                                                                                                                                                                  VARCHAR2(20)
+ TEL                                                                                                                                                                                    VARCHAR2(15)
+ INFO                                                                                                                                                                                   VARCHAR2(10)
+
+SQL> alter table member
+  2  modify(tel char(11));
+
+Table altered.
+
+SQL> alter table member
+  2  drop column info.
+  3  ;
+drop column info.
+                *
+ERROR at line 2:
+ORA-01748: only simple column names allowed here
+
+
+SQL> alter table member
+  2  drop column info
+  3  ;
+
+Table altered.
+
+SQL> alter table member
+  2  rename column addr to address;
+
+Table altered.
+
+SQL> desc member
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ ID                                                                                                                                                                                     VARCHAR2(10)
+ PASS                                                                                                                                                                                   VARCHAR2(10)
+ ADDRESS                                                                                                                                                                                VARCHAR2(20)
+ POINT                                                                                                                                                                                  NUMBER
+ NAME                                                                                                                                                                                   VARCHAR2(20)
+ EMAIL                                                                                                                                                                                  VARCHAR2(20)
+ TEL                                                                                                                                                                                    CHAR(11)
+
+SQL> drop table member
+  2  ;
+
+Table dropped.
+
+SQL> select * from tab;
+
+TNAME                                                        TABTYPE         CLUSTERID
+------------------------------------------------------------ -------------- ----------
+COUNTDATA                                                    VIEW
+CUSTOMER                                                     TABLE
+DEPT                                                         TABLE
+EMP                                                          TABLE
+FACTORY                                                      TABLE
+LOCATIONS                                                    TABLE
+PRODUCT                                                      TABLE
+SALGRADE                                                     TABLE
+STORE                                                        TABLE
+TEST                                                         TABLE
+
+10 rows selected.
+
+SQL> create table member(
+  2             id varchar2(10) primary key
+  3             , pass varchar2(10)
+  4             , name varchar2(20) not null
+  5             , addr varchar2(20));
+
+Table created.
+
+SQL> insert into member (id, name) values ('jang', null);
+insert into member (id, name) values ('jang', null)
+                                              *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."MEMBER"."NAME")
+
+
+SQL> desc user_constraints;
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ OWNER                                                                                                                                                                                  VARCHAR2(120)
+ CONSTRAINT_NAME                                                                                                                                                               NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                                                                                                                                                        VARCHAR2(1)
+ TABLE_NAME                                                                                                                                                                    NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                                                                                                                                                       LONG
+ R_OWNER                                                                                                                                                                                VARCHAR2(120)
+ R_CONSTRAINT_NAME                                                                                                                                                                      VARCHAR2(30)
+ DELETE_RULE                                                                                                                                                                            VARCHAR2(9)
+ STATUS                                                                                                                                                                                 VARCHAR2(8)
+ DEFERRABLE                                                                                                                                                                             VARCHAR2(14)
+ DEFERRED                                                                                                                                                                               VARCHAR2(9)
+ VALIDATED                                                                                                                                                                              VARCHAR2(13)
+ GENERATED                                                                                                                                                                              VARCHAR2(14)
+ BAD                                                                                                                                                                                    VARCHAR2(3)
+ RELY                                                                                                                                                                                   VARCHAR2(4)
+ LAST_CHANGE                                                                                                                                                                            DATE
+ INDEX_OWNER                                                                                                                                                                            VARCHAR2(30)
+ INDEX_NAME                                                                                                                                                                             VARCHAR2(30)
+ INVALID                                                                                                                                                                                VARCHAR2(7)
+ VIEW_RELATED                                                                                                                                                                           VARCHAR2(14)
+
+SQL> select owner, CONSTRAINT_NAME, CONSTRAINT_TYPE,TABLE_NAME from user_constraints;
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C006997                                                  C  CUSTOMER
+
+SCOTT
+SYS_C006998                                                  P  CUSTOMER
+
+SCOTT
+SYS_C006999                                                  C  PRODUCT
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007000                                                  P  PRODUCT
+
+SCOTT
+SYS_C007001                                                  C  FACTORY
+
+SCOTT
+SYS_C007002                                                  P  FACTORY
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007003                                                  C  STORE
+
+SCOTT
+SYS_C007004                                                  P  STORE
+
+SCOTT
+SYS_C007005                                                  P  EMP
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007006                                                  C  MEMBER
+
+SCOTT
+SYS_C007007                                                  P  MEMBER
+
+
+11 rows selected.
+
+SQL> alter table member
+  2  add(ssn varchar2(15));
+
+Table altered.
+
+SQL> desc member
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ ID                                                                                                                                                                            NOT NULL VARCHAR2(10)
+ PASS                                                                                                                                                                                   VARCHAR2(10)
+ NAME                                                                                                                                                                          NOT NULL VARCHAR2(20)
+ ADDR                                                                                                                                                                                   VARCHAR2(20)
+ SSN                                                                                                                                                                                    VARCHAR2(15)
+
+SQL> alter table member
+  2  add constraint mem_ssn_uni unique(ssn);
+
+Table altered.
+
+SQL> select owner, CONSTRAINT_NAME, CONSTRAINT_TYPE,TABLE_NAME from member;
+select owner, CONSTRAINT_NAME, CONSTRAINT_TYPE,TABLE_NAME from member
+                                               *
+ERROR at line 1:
+ORA-00904: "TABLE_NAME": invalid identifier
+
+
+SQL> select owner, CONSTRAINT_NAME, CONSTRAINT_TYPE,TABLE_NAME from user_constraints;
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C006997                                                  C  CUSTOMER
+
+SCOTT
+SYS_C006998                                                  P  CUSTOMER
+
+SCOTT
+SYS_C006999                                                  C  PRODUCT
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007000                                                  P  PRODUCT
+
+SCOTT
+SYS_C007001                                                  C  FACTORY
+
+SCOTT
+SYS_C007002                                                  P  FACTORY
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007003                                                  C  STORE
+
+SCOTT
+SYS_C007004                                                  P  STORE
+
+SCOTT
+SYS_C007005                                                  P  EMP
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007006                                                  C  MEMBER
+
+SCOTT
+SYS_C007007                                                  P  MEMBER
+
+SCOTT
+MEM_SSN_UNI                                                  U  MEMBER
+
+
+12 rows selected.
+
+SQL> inser into member(id, name, ssn) values ('jang', '장동건', '12345');
+SP2-0734: unknown command beginning "inser into..." - rest of line ignored.
+SQL> insert into member(id, name, ssn) values ('jang', '장동건', '12345');
+
+1 row created.
+
+SQL> insert into member(id, name, ssn) values ('jang1', '장동건', '12345');
+insert into member(id, name, ssn) values ('jang1', '장동건', '12345')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.MEM_SSN_UNI) violated
+
+
+SQL> insert into member(id, name, ssn) values ('jang1', '장동건', '12346');
+
+1 row created.
+
+SQL> alter table member
+  2
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> create table mydept(
+  2             code varchar2(20) primary key,
+  3             name varchar2(20));
+
+Table created.
+
+SQL> insert into mydept values('001','전산실');
+
+1 row created.
+
+SQL> insert into mydept values('002','인사팀');
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> alter table member
+  2  add (deptcode varchar2(20));
+
+Table altered.
+
+SQL> alter table member
+  2  add constraint mem_code_kf foreign key(deptcode)
+  3                 reference mydept(code);
+                    reference mydept(code)
+                    *
+ERROR at line 3:
+ORA-00905: missing keyword
+
+
+SQL> add constraint mem_code_kf foreign key(deptcode)
+SP2-0734: unknown command beginning "add constr..." - rest of line ignored.
+SQL> alter table member
+  2  add constraint mem_code_kf foreign key(deptcode)
+  3                 references mydept(code);
+
+Table altered.
+
+SQL> select owner, CONSTRAINT_NAME, CONSTRAINT_TYPE,TABLE_NAME from user_constraints;
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C006997                                                  C  CUSTOMER
+
+SCOTT
+SYS_C006998                                                  P  CUSTOMER
+
+SCOTT
+SYS_C006999                                                  C  PRODUCT
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007000                                                  P  PRODUCT
+
+SCOTT
+SYS_C007001                                                  C  FACTORY
+
+SCOTT
+SYS_C007002                                                  P  FACTORY
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007003                                                  C  STORE
+
+SCOTT
+SYS_C007004                                                  P  STORE
+
+SCOTT
+SYS_C007005                                                  P  EMP
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007006                                                  C  MEMBER
+
+SCOTT
+SYS_C007007                                                  P  MEMBER
+
+SCOTT
+MEM_SSN_UNI                                                  U  MEMBER
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SCOTT
+SYS_C007009                                                  P  MYDEPT
+
+SCOTT
+MEM_CODE_KF                                                  R  MEMBER
+
+
+14 rows selected.
+
+SQL> insert into member(id, name,ssn,deptcode) values ('lee','이민호','54321','001');
+
+1 row created.
+
+SQL> insert into member(id, name,ssn,deptcode) values ('lee2','이민호','543210','003');
+insert into member(id, name,ssn,deptcode) values ('lee2','이민호','543210','003')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.MEM_CODE_KF) violated - parent key not found
+
+
+SQL> drop table mydept;
+drop table mydept
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> desc member;
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ ID                                                                                                                                                                            NOT NULL VARCHAR2(10)
+ PASS                                                                                                                                                                                   VARCHAR2(10)
+ NAME                                                                                                                                                                          NOT NULL VARCHAR2(20)
+ ADDR                                                                                                                                                                                   VARCHAR2(20)
+ SSN                                                                                                                                                                                    VARCHAR2(15)
+ DEPTCODE                                                                                                                                                                               VARCHAR2(20)
+
+SQL> alter talbe member
+  2  add constraint member_ck check
+  3  (addr in ('인천', '서울', '경기'));
+alter talbe member
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command
+
+
+SQL> alter table member
+  2  (addr in ('인천', '서울', '경기'));
+(addr in ('인천', '서울', '경기'))
+*
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table member
+  2  add constraint member_ck check
+  3  (addr in ('인천', '서울', '경기'));
+
+Table altered.
+
+SQL> insert into member(id,name,addr) values('kang','강감찬','인천');
+
+1 row created.
+
+SQL> insert into member(id,name,addr) values('kang2','강감찬2','부산');
+insert into member(id,name,addr) values('kang2','강감찬2','부산')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.MEMBER_CK) violated
+
+
+SQL> alter table member
+  2  drop constraint member_ck;
+
+Table altered.
+
+SQL> insert into member(id,name,addr) values('kang2','강감찬2','부산');
+
+1 row created.
+
+SQL> create table myorder(
+  2             ord_num varchar2(10) primary key,
+  3             id varchar2(20));
+
+Table created.
+
+SQL> create table order_detail(
+  2             ord_num varchar2(10),
+  3             prd_num varchar2(20));
+
+Table created.
+
+SQL> create sequence myorder_seq;
+
+Sequence created.
+
+SQL> insert into myorder values(myorder_sqe.nextval, 'jang');
+insert into myorder values(myorder_sqe.nextval, 'jang')
+                           *
+ERROR at line 1:
+ORA-02289: sequence does not exist
+
+
+SQL> insert into myorder values(myorder_seq.nextval, 'jang');
+
+1 row created.
+
+SQL> insert into order_detail values(myorder_seq.currval,'prd001');
+
+1 row created.
+
+SQL> insert into order_detail values(myorder_seq.currval,'prd002');
+
+1 row created.
+
+SQL> insert into order_detail values(myorder_seq.currval,'prd003');
+
+1 row created.
+
+SQL> select * from order_detail
+  2  ;
+
+ORD_NUM              PRD_NUM
+-------------------- ----------------------------------------
+1                    prd001
+1                    prd002
+1                    prd003
+
+SQL> select * from myorder;
+
+ORD_NUM              ID
+-------------------- ----------------------------------------
+1                    jang
+
+SQL> insert into myorder values(myorder_seq.nextval, 'ka')
+  2
+SQL>
+SQL> insert into myorder values(myorder_seq.nextval, 'ka');
+
+1 row created.
+
+SQL>
+SQL>
+SQL> insert into myorder values(myorder_seq.nextval, 'ka');
+
+1 row created.
+
+SQL> insert into myorder values(myorder_seq.nextval, 'ka');
+
+1 row created.
+
+SQL> insert into myorder values(myorder_seq.nextval, 'ka');
+
+1 row created.
+
+SQL> select * from myorder;
+
+ORD_NUM              ID
+-------------------- ----------------------------------------
+1                    jang
+2                    ka
+3                    ka
+4                    ka
+5                    ka
+
+SQL> drop sequence myorder_seq;
+
+Sequence dropped.
+
+SQL> create table TB_MEM(
+  2
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> conn system/manager
+Connected.
+SQL> create user shop identified by shop;
+
+User created.
+
+SQL> grant connect, resourece to shop;
+grant connect, resourece to shop
+               *
+ERROR at line 1:
+ORA-01919: role 'RESOURECE' does not exist
+
+
+SQL> grant connect, resource to shop;
+
+Grant succeeded.
+
+SQL> conn shop/shop;
+Connected.
+SQL>
+SQL>
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD, varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(50)not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM sysdate);
+MEM_CD, varchar2(10),
+        *
+ERROR at line 4:
+ORA-00904: : invalid identifier
+
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(50)not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM sysdate)
+ 17  ;
+MEM_REG_DTM sysdate)
+            *
+ERROR at line 16:
+ORA-00902: invalid datatype
+
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(50)not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM date);
+
+Table created.
+
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+
+Table altered.
+
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(50),
+  6  SELL_PRC_UNIT varchar2(10),
+  7  SELL_START_DT date,
+  8  SELL_END_DT date,
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG chr(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM date);
+RETURN_FLG chr(1),
+              *
+ERROR at line 11:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(50),
+  6  SELL_PRC_UNIT varchar2(10),
+  7  SELL_START_DT date,
+  8  SELL_END_DT date,
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM date);
+
+Table created.
+
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT varchar2(10) not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(50) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM sysdate not null);
+ORD_DTM sysdate not null)
+        *
+ERROR at line 11:
+ORA-00902: invalid datatype
+
+
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT varchar2(10) not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(50) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM date not null);
+
+Table created.
+
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID);
+
+Table altered.
+
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12) primary key,
+  3  PRD_NO char(12) primary key);
+PRD_NO char(12) primary key)
+                *
+ERROR at line 3:
+ORA-02260: table can have only one primary key
+
+
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12) primary key,
+  3  PRD_NO char(12));
+
+Table created.
+
+SQL> drop table TB_ORDER_PRODUCT;
+
+Table dropped.
+
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12)
+  3  PRD_NO char(12)
+  4  QTY integer);
+PRD_NO char(12)
+*
+ERROR at line 3:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12),
+  3  PRD_NO char(12),
+  4  QTY integer);
+
+Table created.
+
+SQL> alter table ORDER_PRODUCT
+  2  add constraint ord_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint ord_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+alter table ORDER_PRODUCT
+*
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ord_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint ord_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+add constraint ord_mem_kf foreign key(ORD_NO)
+               *
+ERROR at line 2:
+ORA-02264: name already used by an existing constraint
+
+
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ord_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prd_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO)
+  6  ;
+add constraint ord_mem_kf foreign key(ORD_NO)
+               *
+ERROR at line 2:
+ORA-02264: name already used by an existing constraint
+
+
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+
+Table altered.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'USR', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+VALUES('user01', '홍길동', 'USR', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                                                                                                                                          *
+ERROR at line 2:
+ORA-12899: value too large for column "SHOP"."TB_MEM"."ADDR" (actual: 60, maximum: 50)
+
+
+SQL> alter table TB_MEM
+  2  modify(varchar2(100));
+modify(varchar2(100))
+       *
+ERROR at line 2:
+ORA-00904: : invalid identifier
+
+
+SQL> alter table TB_MEM
+  2  modify(ADDR varchar2(100));
+
+Table altered.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'USR', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+VALUES('user01', '홍길동', 'USR', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                                                                                                                                                                                                                                 *
+ERROR at line 2:
+ORA-01861: literal does not match format string
+
+
+SQL> drop table TB_ORDER
+  2  ;
+drop table TB_ORDER
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> drop table TB_ORDER
+  2  drop table TB_ORDER_PRODUCT;
+drop table TB_ORDER_PRODUCT
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> drop table TB_ORDER_PRODUCT
+  2  ;
+
+Table dropped.
+
+SQL> drop table TB_ORDER
+  2  ;
+
+Table dropped.
+
+SQL> drop table TB_PRODUCT
+  2  ;
+
+Table dropped.
+
+SQL> drop table TB_MEM;
+
+Table dropped.
+
+SQL> select * from tab;
+
+no rows selected
+
+SQL>
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(50)not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+
+Table created.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'USR', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+VALUES('user01', '홍길동', 'USR', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                                                                                                                                          *
+ERROR at line 2:
+ORA-12899: value too large for column "SHOP"."TB_MEM"."ADDR" (actual: 60, maximum: 50)
+
+
+SQL> drop table TB_MEM;
+
+Table dropped.
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+
+Table created.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'USR', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> drop table TB_MEM;
+
+Table dropped.
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16))
+ 17
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'))
+  4
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(50),
+  6  SELL_PRC_UNIT varchar2(10),
+  7  SELL_START_DT date,
+  8  SELL_END_DT date,
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM date)
+ 16
+SQL>
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT varchar2(10) not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(100) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM date not null)
+ 12
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID)
+  4
+SQL>
+SQL>
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12),
+  3  PRD_NO char(12),
+  4  QTY integer)
+  5
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO)
+  6  ;
+alter table TB_ORDER_PRODUCT
+*
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from tab;
+
+no rows selected
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+
+Table created.
+
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+
+Table altered.
+
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(50),
+  6  SELL_PRC_UNIT varchar2(10),
+  7  SELL_START_DT date,
+  8  SELL_END_DT date,
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM date);
+
+Table created.
+
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT varchar2(10) not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(100) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM date not null);
+
+Table created.
+
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID);
+
+Table altered.
+
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12),
+  3  PRD_NO char(12),
+  4  QTY integer);
+
+Table created.
+
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO)
+  6  ;
+
+Table altered.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'USR', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+*
+ERROR at line 1:
+ORA-02290: check constraint (SHOP.MEM_CD_CK) violated
+
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'Guest', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('admin01', '관리자', 'VIP', 'admin01', '고등학교는?', '삼성고등학교', '7010101234567', '19701010', 'F', '02-555-1000', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'admin@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                                              *
+ERROR at line 2:
+ORA-12899: value too large for column "SHOP"."TB_PRODUCT"."PRD_DES" (actual: 58, maximum: 50)
+
+
+SQL> alter table TB_PRODUCT
+  2  modify(PRD_DES varchar2(100));
+
+Table altered.
+
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                                                                                                                                                                                                                                 *
+ERROR at line 2:
+ORA-01861: literal does not match format string
+
+
+SQL> drop table TB_MEM;
+drop table TB_MEM
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> drop table TB_PRODUCT;
+drop table TB_PRODUCT
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> drop table TB_ORDER
+  2  drop table TB_ORDER_PRODUCT;
+drop table TB_ORDER_PRODUCT
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL>
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+create table TB_MEM(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL>
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+add constraint ssn_uniq unique(SSN)
+                        *
+ERROR at line 2:
+ORA-02261: such unique or primary key already exists in the table
+
+
+SQL>
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(100),
+  6  SELL_PRC_UNIT integer,
+  7  SELL_START_DT char(16),
+  8  SELL_END_DT char(16),
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM char(16));
+create table TB_PRODUCT(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL>
+SQL>
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT integer not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(100) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM char(16) not null);
+create table TB_ORDER(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL>
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID);
+add constraint ord_mem_kf foreign key(MEM_ID)
+                          *
+ERROR at line 2:
+ORA-02275: such a referential constraint already exists in the table
+
+
+SQL>
+SQL>
+SQL>
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12),
+  3  PRD_NO char(12),
+  4  QTY integer);
+create table TB_ORDER_PRODUCT(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL>
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+add constraint ordp_mem_kf foreign key(ORD_NO)
+                           *
+ERROR at line 2:
+ORA-02275: such a referential constraint already exists in the table
+
+
+SQL> drop table TB_ORDER_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_ORDER;
+
+Table dropped.
+
+SQL> drop table TB_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_MEM;
+
+Table dropped.
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+
+Table altered.
+
+SQL>
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(100),
+  6  SELL_PRC_UNIT integer,
+  7  SELL_START_DT char(16),
+  8  SELL_END_DT char(16),
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL>
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT integer not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(100) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM char(16) not null);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID);
+
+Table altered.
+
+SQL>
+SQL>
+SQL>
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12),
+  3  PRD_NO char(12),
+  4  QTY integer);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+
+Table altered.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'Guest', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('admin01', '관리자', 'VIP', 'admin01', '고등학교는?', '삼성고등학교', '7010101234567', '19701010', 'F', '02-555-1000', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'admin@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000002', '올인원크리스', 'CAT000000005', '진주의방울방울이 끝내줍니다.', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image2.jpg', 'acc_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000003', '블론디네크리스', 'CAT000000005', '조금 있으면 품절이예요 빨리 서두르세요', 18000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image3.jpg', 'acc_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000004', '로렐라이네크리스', 'CAT000000005', 'Best of Best', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image4.jpg', 'acc_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000005', '스트로우네크리스', 'CAT000000005', '악세사리 멋져요', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image5.jpg', 'acc_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000006', '글로아셔링ops', 'CAT000000001', '사랑스런 셔링의 루즈핏', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images1.jpg', 'dress_images1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000007', '바이블ops', 'CAT000000001', '큐트한 라인감이 여성스러워요', 23900, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images2.jpg', 'dress_images2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000008', '텐디박스ops', 'CAT000000001', '편안해요 홈웨어로도 좋아요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images3.jpg', 'dress_images3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000009', '마리안 ops', 'CAT000000001', '살랑거리는 핏이 가녀린 여성미를 연출해줄 봄 원피스', 36000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images4.jpg', 'dress_images4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000010', '디아망 ops', 'CAT000000001', '시스루 디테일로 여성스러움에 은은한 섹시함까지', 59800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images5.jpg', 'dress_images5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000011', 'no.3932', 'CAT000000002', '썸머 나시 남다른 비치웨어로', 9800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image1.gif', 'top_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000012', '숄더홀믹스', 'CAT000000002', '네추럴한 가오리핏으로 순수하고 께끗한 이미지를 up', 38000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image2.jpg', 'top_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000013', '클로라모티브', 'CAT000000002', '넉넉한 핏과 레이스패턴으로 여리하고 여성스러워요', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image3.jpg', 'top_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000014', '타임포켓', 'CAT000000002', '부드러운 소재로 착용감 정말 편해요', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image4.jpg', 'top_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000015', '글로니린넨', 'CAT000000002', '체형커버에도 좋은 장점', 27400, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image5.jpg', 'top_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000016', '7부쿨팬츠', 'CAT000000003', '여름까지 쭉 입기 좋은 소재와 베이직한 디자인으로 소장가치 up',14500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image1.gif', 'bottom_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000017', '미카베이직펜츠', 'CAT000000003', '세련된 느낌이 참좋아요', 24500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image2.jpg', 'bottom_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000018', '빈스큐롯반펜츠', 'CAT000000003', '가볍고 시원하게 즐겨주세요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image3.jpg', 'bottom_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000019', '브루노배기팬츠', 'CAT000000003', '화사한 플라워 패턴으로 스타일UP ', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image4.jpg', 'bottom_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000020', '히스토리팬츠', 'CAT000000003', '신축성좋은 슬림핏데님', 27000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image5.jpg', 'bottom_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000021', '필립차이나 사파리', 'CAT000000004', '네추럴한 핏과 가벼운 소재로 편하게 걸치기 좋아요',61800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image1.gif', 'outer_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000022', '띠어리nb', 'CAT000000004', '아우터 셔츠로 연출하기 좋은 실용적인 아이템', 59000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image2.jpg', 'outer_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000023', '메종더블', 'CAT000000004', '날씬하게 떨어지는 핏이 정말 매력적인', 73000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image3.jpg', 'outer_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000024', '세인트린넨jk', 'CAT000000004', '린넨 100% 고급스러운 자켓!소재,디자인,핏,마감 정말 좋은 퀄리티메이드 아이템!', 68000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image4.jpg', 'outer_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+VALUES('PRD000000024', '세인트린넨jk', 'CAT000000004', '린넨 100% 고급스러운 자켓!소재,디자인,핏,마감 정말 좋은 퀄리티메이드 아이템!', 68000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image4.jpg', 'outer_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                                            *
+ERROR at line 2:
+ORA-12899: value too large for column "SHOP"."TB_PRODUCT"."PRD_DES" (actual: 106, maximum: 100)
+
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000025', '메이퀸 진주 조끼', 'CAT000000004', '가볍게 걸치기만해도 멋스러운 아이템!', 49300, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image5.jpg', 'outer_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> drop table TB_ORDER_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_ORDER;
+
+Table dropped.
+
+SQL> drop table TB_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_MEM;
+
+Table dropped.
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+
+Table altered.
+
+SQL>
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(100),
+  6  SELL_PRC_UNIT integer,
+  7  SELL_START_DT char(16),
+  8  SELL_END_DT char(16),
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL>
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT integer not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(200) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM char(16) not null);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID);
+
+Table altered.
+
+SQL>
+SQL>
+SQL>
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12),
+  3  PRD_NO char(12),
+  4  QTY integer);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+
+Table altered.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'Guest', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('admin01', '관리자', 'VIP', 'admin01', '고등학교는?', '삼성고등학교', '7010101234567', '19701010', 'F', '02-555-1000', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'admin@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>  INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000002', '올인원크리스', 'CAT000000005', '진주의방울방울이 끝내줍니다.', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image2.jpg', 'acc_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000003', '블론디네크리스', 'CAT000000005', '조금 있으면 품절이예요 빨리 서두르세요', 18000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image3.jpg', 'acc_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000004', '로렐라이네크리스', 'CAT000000005', 'Best of Best', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image4.jpg', 'acc_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000005', '스트로우네크리스', 'CAT000000005', '악세사리 멋져요', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image5.jpg', 'acc_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000006', '글로아셔링ops', 'CAT000000001', '사랑스런 셔링의 루즈핏', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images1.jpg', 'dress_images1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000007', '바이블ops', 'CAT000000001', '큐트한 라인감이 여성스러워요', 23900, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images2.jpg', 'dress_images2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000008', '텐디박스ops', 'CAT000000001', '편안해요 홈웨어로도 좋아요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images3.jpg', 'dress_images3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000009', '마리안 ops', 'CAT000000001', '살랑거리는 핏이 가녀린 여성미를 연출해줄 봄 원피스', 36000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images4.jpg', 'dress_images4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000010', '디아망 ops', 'CAT000000001', '시스루 디테일로 여성스러움에 은은한 섹시함까지', 59800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images5.jpg', 'dress_images5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000011', 'no.3932', 'CAT000000002', '썸머 나시 남다른 비치웨어로', 9800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image1.gif', 'top_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000012', '숄더홀믹스', 'CAT000000002', '네추럴한 가오리핏으로 순수하고 께끗한 이미지를 up', 38000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image2.jpg', 'top_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000013', '클로라모티브', 'CAT000000002', '넉넉한 핏과 레이스패턴으로 여리하고 여성스러워요', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image3.jpg', 'top_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000014', '타임포켓', 'CAT000000002', '부드러운 소재로 착용감 정말 편해요', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image4.jpg', 'top_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000015', '글로니린넨', 'CAT000000002', '체형커버에도 좋은 장점', 27400, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image5.jpg', 'top_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000016', '7부쿨팬츠', 'CAT000000003', '여름까지 쭉 입기 좋은 소재와 베이직한 디자인으로 소장가치 up',14500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image1.gif', 'bottom_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000017', '미카베이직펜츠', 'CAT000000003', '세련된 느낌이 참좋아요', 24500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image2.jpg', 'bottom_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000018', '빈스큐롯반펜츠', 'CAT000000003', '가볍고 시원하게 즐겨주세요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image3.jpg', 'bottom_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000019', '브루노배기팬츠', 'CAT000000003', '화사한 플라워 패턴으로 스타일UP ', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image4.jpg', 'bottom_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000020', '히스토리팬츠', 'CAT000000003', '신축성좋은 슬림핏데님', 27000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image5.jpg', 'bottom_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000021', '필립차이나 사파리', 'CAT000000004', '네추럴한 핏과 가벼운 소재로 편하게 걸치기 좋아요',61800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image1.gif', 'outer_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000022', '띠어리nb', 'CAT000000004', '아우터 셔츠로 연출하기 좋은 실용적인 아이템', 59000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image2.jpg', 'outer_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000023', '메종더블', 'CAT000000004', '날씬하게 떨어지는 핏이 정말 매력적인', 73000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image3.jpg', 'outer_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000024', '세인트린넨jk', 'CAT000000004', '린넨 100% 고급스러운 자켓!소재,디자인,핏,마감 정말 좋은 퀄리티메이드 아이템!', 68000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image4.jpg', 'outer_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+VALUES('PRD000000024', '세인트린넨jk', 'CAT000000004', '린넨 100% 고급스러운 자켓!소재,디자인,핏,마감 정말 좋은 퀄리티메이드 아이템!', 68000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image4.jpg', 'outer_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                                            *
+ERROR at line 2:
+ORA-12899: value too large for column "SHOP"."TB_PRODUCT"."PRD_DES" (actual: 106, maximum: 100)
+
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000025', '메이퀸 진주 조끼', 'CAT000000004', '가볍게 걸치기만해도 멋스러운 아이템!', 49300, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image5.jpg', 'outer_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL> drop table TB_ORDER_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_ORDER;
+
+Table dropped.
+
+SQL> drop table TB_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_MEM;
+
+Table dropped.
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+
+Table altered.
+
+SQL>
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(200),
+  6  SELL_PRC_UNIT integer,
+  7  SELL_START_DT char(16),
+  8  SELL_END_DT char(16),
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL>
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT integer not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(100) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM char(16) not null);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID);
+
+Table altered.
+
+SQL>
+SQL>
+SQL>
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12),
+  3  PRD_NO char(12),
+  4  QTY integer);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+
+Table altered.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'Guest', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('admin01', '관리자', 'VIP', 'admin01', '고등학교는?', '삼성고등학교', '7010101234567', '19701010', 'F', '02-555-1000', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'admin@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000002', '올인원크리스', 'CAT000000005', '진주의방울방울이 끝내줍니다.', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image2.jpg', 'acc_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000003', '블론디네크리스', 'CAT000000005', '조금 있으면 품절이예요 빨리 서두르세요', 18000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image3.jpg', 'acc_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000004', '로렐라이네크리스', 'CAT000000005', 'Best of Best', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image4.jpg', 'acc_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000005', '스트로우네크리스', 'CAT000000005', '악세사리 멋져요', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image5.jpg', 'acc_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000006', '글로아셔링ops', 'CAT000000001', '사랑스런 셔링의 루즈핏', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images1.jpg', 'dress_images1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000007', '바이블ops', 'CAT000000001', '큐트한 라인감이 여성스러워요', 23900, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images2.jpg', 'dress_images2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000008', '텐디박스ops', 'CAT000000001', '편안해요 홈웨어로도 좋아요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images3.jpg', 'dress_images3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000009', '마리안 ops', 'CAT000000001', '살랑거리는 핏이 가녀린 여성미를 연출해줄 봄 원피스', 36000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images4.jpg', 'dress_images4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000010', '디아망 ops', 'CAT000000001', '시스루 디테일로 여성스러움에 은은한 섹시함까지', 59800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images5.jpg', 'dress_images5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000011', 'no.3932', 'CAT000000002', '썸머 나시 남다른 비치웨어로', 9800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image1.gif', 'top_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000012', '숄더홀믹스', 'CAT000000002', '네추럴한 가오리핏으로 순수하고 께끗한 이미지를 up', 38000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image2.jpg', 'top_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000013', '클로라모티브', 'CAT000000002', '넉넉한 핏과 레이스패턴으로 여리하고 여성스러워요', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image3.jpg', 'top_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000014', '타임포켓', 'CAT000000002', '부드러운 소재로 착용감 정말 편해요', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image4.jpg', 'top_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000015', '글로니린넨', 'CAT000000002', '체형커버에도 좋은 장점', 27400, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image5.jpg', 'top_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000016', '7부쿨팬츠', 'CAT000000003', '여름까지 쭉 입기 좋은 소재와 베이직한 디자인으로 소장가치 up',14500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image1.gif', 'bottom_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000017', '미카베이직펜츠', 'CAT000000003', '세련된 느낌이 참좋아요', 24500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image2.jpg', 'bottom_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000018', '빈스큐롯반펜츠', 'CAT000000003', '가볍고 시원하게 즐겨주세요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image3.jpg', 'bottom_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000019', '브루노배기팬츠', 'CAT000000003', '화사한 플라워 패턴으로 스타일UP ', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image4.jpg', 'bottom_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000020', '히스토리팬츠', 'CAT000000003', '신축성좋은 슬림핏데님', 27000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image5.jpg', 'bottom_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000021', '필립차이나 사파리', 'CAT000000004', '네추럴한 핏과 가벼운 소재로 편하게 걸치기 좋아요',61800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image1.gif', 'outer_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000022', '띠어리nb', 'CAT000000004', '아우터 셔츠로 연출하기 좋은 실용적인 아이템', 59000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image2.jpg', 'outer_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000023', '메종더블', 'CAT000000004', '날씬하게 떨어지는 핏이 정말 매력적인', 73000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image3.jpg', 'outer_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000024', '세인트린넨jk', 'CAT000000004', '린넨 100% 고급스러운 자켓!소재,디자인,핏,마감 정말 좋은 퀄리티메이드 아이템!', 68000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image4.jpg', 'outer_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000025', '메이퀸 진주 조끼', 'CAT000000004', '가볍게 걸치기만해도 멋스러운 아이템!', 49300, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image5.jpg', 'outer_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL>
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> CREATE SEQUENCE ORD_NO_SEQ
+  2   INCREMENT BY 0
+  3   START WITH 100000000
+  4   MINVALUE   100000000
+  5   MAXVALUE   999999999
+  6   CYCLE
+  7   CACHE 1000
+  8   ORDER;
+CREATE SEQUENCE ORD_NO_SEQ
+*
+ERROR at line 1:
+ORA-04002: INCREMENT must be a non-zero integer
+
+
+SQL> CREATE SEQUENCE ORD_NO_SEQ
+  2   INCREMENT BY 1
+  3   START WITH 100000001
+  4   MINVALUE   100000001
+  5   MAXVALUE   999999999
+  6   CYCLE
+  7   CACHE 1000
+  8   ORDER;
+
+Sequence created.
+
+SQL> INSERT INTO TB_PRODUCT(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  2  values(
+  3  'ORD20191223'|ORD_NO_SEQ.NEXTVAL,
+  4  'user01',
+  5  39000,
+  6  '홍길동',
+  7  '010-234-4567',
+  8  '서울시 서초구 서초동 서초아파트 101동 1001호',
+  9  'EMART00001',
+ 10  '경비실에 보관해 주세요',
+ 11  'Y',
+ 12  to_char(sysdate, 'YYYYMMDDHH24MISS'));
+'ORD20191223'|ORD_NO_SEQ.NEXTVAL,
+             *
+ERROR at line 3:
+ORA-00996: the concatenate operator is ||, not |
+
+
+SQL> INSERT INTO TB_PRODUCT(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  2  values(
+  3  'ORD20191223'||ORD_NO_SEQ.NEXTVAL,
+  4  'user01',
+  5  39000,
+  6  '홍길동',
+  7  '010-234-4567',
+  8  '서울시 서초구 서초동 서초아파트 101동 1001호',
+  9  'EMART00001',
+ 10  '경비실에 보관해 주세요',
+ 11  'Y',
+ 12  to_char(sysdate, 'YYYYMMDDHH24MISS'));
+INSERT INTO TB_PRODUCT(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+                                                                                                                    *
+ERROR at line 1:
+ORA-00904: "ORD_DTM": invalid identifier
+
+
+SQL> INSERT INTO TB_PRODUCT(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  2  values('ORD20191223'||ORD_NO_SEQ.NEXTVAL, 'user01', 39000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'EMART00001', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'));
+INSERT INTO TB_PRODUCT(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+                                                                                                                    *
+ERROR at line 1:
+ORA-00904: "ORD_DTM": invalid identifier
+
+
+SQL> INSERT INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  2  values('ORD20191223'||ORD_NO_SEQ.NEXTVAL, 'user01', 39000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'EMART00001', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'));
+values('ORD20191223'||ORD_NO_SEQ.NEXTVAL, 'user01', 39000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'EMART00001', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                     *
+ERROR at line 2:
+ORA-12899: value too large for column "SHOP"."TB_ORDER"."ORD_NO" (actual: 20, maximum: 12)
+
+
+SQL> drop sequence ord_no_seq;
+
+Sequence dropped.
+
+SQL> CREATE SEQUENCE ORD_NO_SEQ
+  2   INCREMENT BY 1
+  3   START WITH 0001
+  4   MINVALUE   0001
+  5   MAXVALUE   9999
+  6   CYCLE
+  7   CACHE 1000
+  8   ORDER;
+
+Sequence created.
+
+SQL> INSERT INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  2  values('ORD20191223'||ORD_NO_SEQ.NEXTVAL, 'user01', 39000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'EMART00001', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'));
+
+1 row created.
+
+SQL> drop ord_no_seq;
+drop ord_no_seq
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL>  drop sequence ord_no_seq;
+
+Sequence dropped.
+
+SQL> CREATE SEQUENCE ORD_NO_SEQ
+  2   INCREMENT BY 1
+  3   START WITH 0001
+  4   MINVALUE   0001
+  5   MAXVALUE   9999
+  6   CYCLE
+  7   CACHE 1000
+  8   ORDER;
+
+Sequence created.
+
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'user01', 195000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', '11ST', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 2);
+INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 2)
+                                                                                                                             *
+ERROR at line 5:
+ORA-00928: missing SELECT keyword
+
+
+SQL>
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'user01', 195000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', '11ST', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 2)
+  6  select * from dual;
+INSERT ALL
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SHOP.SYS_C007139) violated
+
+
+SQL> select owner, CONSTRAINT_NAME, CONSTRAINT_TYPE,TABLE_NAME from user_constraints;
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP
+SYS_C007120                                                  C  TB_MEM
+
+SHOP
+SYS_C007121                                                  C  TB_MEM
+
+SHOP
+SYS_C007122                                                  C  TB_MEM
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP
+SYS_C007123                                                  C  TB_MEM
+
+SHOP
+SYS_C007124                                                  C  TB_MEM
+
+SHOP
+SYS_C007125                                                  C  TB_MEM
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP
+SYS_C007126                                                  P  TB_MEM
+
+SHOP
+SSN_UNIQ                                                     U  TB_MEM
+
+SHOP
+MEM_CD_CK                                                    C  TB_MEM
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP
+SYS_C007129                                                  P  TB_PRODUCT
+
+SHOP
+SYS_C007130                                                  C  TB_ORDER
+
+SHOP
+SYS_C007131                                                  C  TB_ORDER
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP
+SYS_C007132                                                  C  TB_ORDER
+
+SHOP
+SYS_C007133                                                  C  TB_ORDER
+
+SHOP
+SYS_C007134                                                  C  TB_ORDER
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP
+SYS_C007135                                                  C  TB_ORDER
+
+SHOP
+SYS_C007136                                                  C  TB_ORDER
+
+SHOP
+SYS_C007137                                                  C  TB_ORDER
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP
+SYS_C007138                                                  C  TB_ORDER
+
+SHOP
+SYS_C007139                                                  P  TB_ORDER
+
+SHOP
+ORD_MEM_KF                                                   R  TB_ORDER
+
+
+OWNER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP
+ORDP_MEM_KF                                                  R  TB_ORDER_PRODUCT
+
+SHOP
+PRDP_MEM_KF                                                  R  TB_ORDER_PRODUCT
+
+
+23 rows selected.
+
+SQL> select * from TB_ORDER;
+
+ORD_NO                   MEM_ID                            ORD_AMT RCVR_NM              RCVR_TEL_NO
+------------------------ ------------------------------ ---------- -------------------- --------------------------
+RCVR_ADDR                                                                                                                                                                                                DLV_CORP_NO
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------
+DLV_REQ                                                                                              ORD_ST ORD_DTM
+---------------------------------------------------------------------------------------------------- ------ --------------------------------
+ORD201912231             user01                              39000 홍길동               010-234-4567
+서울시 서초구 서초동 서초아파트 101동 1001호                                                                                                                                                             EMART00001
+경비실에 보관해 주세요                                                                               Y      20191223132755
+
+
+SQL> delete from tb_order;
+
+1 row deleted.
+
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'user01', 195000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', '11ST', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 2)
+  6  select * from dual;
+
+3 rows created.
+
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'admin01', 288000, '관리자', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'COOPANG', '부재시 연락 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000003', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 1)
+  6  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 5)
+  7  select * from dual;
+
+4 rows created.
+
+SQL> select * from tab;
+
+TNAME                                                        TABTYPE         CLUSTERID
+------------------------------------------------------------ -------------- ----------
+TB_MEM                                                       TABLE
+TB_ORDER                                                     TABLE
+TB_ORDER_PRODUCT                                             TABLE
+TB_PRODUCT                                                   TABLE
+
+SQL> desc TB_MEM
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ MEM_ID                                                                                                                                                                        NOT NULL VARCHAR2(15)
+ MEM_NM                                                                                                                                                                                 VARCHAR2(10)
+ MEM_CD                                                                                                                                                                                 VARCHAR2(10)
+ PWD                                                                                                                                                                           NOT NULL VARCHAR2(20)
+ PWD_HINT                                                                                                                                                                      NOT NULL VARCHAR2(20)
+ PWD_HINT_ANS                                                                                                                                                                  NOT NULL VARCHAR2(20)
+ SSN                                                                                                                                                                           NOT NULL CHAR(13)
+ BIRTH_DT                                                                                                                                                                               CHAR(8)
+ MALE_FLG                                                                                                                                                                      NOT NULL CHAR(1)
+ TEL_NO                                                                                                                                                                                 VARCHAR2(13)
+ CELL_NO                                                                                                                                                                                VARCHAR2(13)
+ ADDR                                                                                                                                                                          NOT NULL VARCHAR2(100)
+ EMAIL                                                                                                                                                                                  VARCHAR2(30)
+ EMAIL_RCV_FLG                                                                                                                                                                          CHAR(1)
+ MEM_REG_DTM                                                                                                                                                                            CHAR(16)
+
+SQL> desc TB_ORDER
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ ORD_NO                                                                                                                                                                        NOT NULL CHAR(12)
+ MEM_ID                                                                                                                                                                        NOT NULL VARCHAR2(15)
+ ORD_AMT                                                                                                                                                                       NOT NULL NUMBER(38)
+ RCVR_NM                                                                                                                                                                       NOT NULL VARCHAR2(10)
+ RCVR_TEL_NO                                                                                                                                                                   NOT NULL VARCHAR2(13)
+ RCVR_ADDR                                                                                                                                                                     NOT NULL VARCHAR2(100)
+ DLV_CORP_NO                                                                                                                                                                   NOT NULL VARCHAR2(13)
+ DLV_REQ                                                                                                                                                                       NOT NULL VARCHAR2(50)
+ ORD_STAT_CD                                                                                                                                                                   NOT NULL CHAR(3)
+ ORD_DTM                                                                                                                                                                       NOT NULL CHAR(16)
+
+SQL> desc TB_ORDER_PRODUCT
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ ORD_NO                                                                                                                                                                                 CHAR(12)
+ PRD_NO                                                                                                                                                                                 CHAR(12)
+ QTY                                                                                                                                                                                    NUMBER(38)
+
+SQL> desc TB_PRODUCT
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ PRD_NO                                                                                                                                                                        NOT NULL CHAR(12)
+ PRD_NM                                                                                                                                                                                 VARCHAR2(30)
+ CATEGORY_NO                                                                                                                                                                            CHAR(12)
+ PRD_DES                                                                                                                                                                                VARCHAR2(200)
+ SELL_PRC_UNIT                                                                                                                                                                          NUMBER(38)
+ SELL_START_DT                                                                                                                                                                          CHAR(16)
+ SELL_END_DT                                                                                                                                                                            CHAR(16)
+ DLV_CONSTRAINT                                                                                                                                                                         VARCHAR2(50)
+ AS_FLG                                                                                                                                                                                 CHAR(1)
+ RETURN_FLG                                                                                                                                                                             CHAR(1)
+ IMG_ORG_FILE_NM                                                                                                                                                                        VARCHAR2(50)
+ IMG_GEN_FILE_NM                                                                                                                                                                        VARCHAR2(50)
+ REG_ID                                                                                                                                                                                 VARCHAR2(20)
+ REG_DTM                                                                                                                                                                                CHAR(16)
+
+SQL> set linesize 100
+SQL> ;
+  1* select * from tab
+SQL> select owner, CONSTRAINT_NAME, CONSTRAINT_TYPE,TABLE_NAME from user_constraints;
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+SHOP
+SYS_C007120                                                  C
+TB_MEM
+
+SHOP
+SYS_C007121                                                  C
+TB_MEM
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+
+SHOP
+SYS_C007122                                                  C
+TB_MEM
+
+SHOP
+SYS_C007123                                                  C
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+TB_MEM
+
+SHOP
+SYS_C007124                                                  C
+TB_MEM
+
+SHOP
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+SYS_C007125                                                  C
+TB_MEM
+
+SHOP
+SYS_C007126                                                  P
+TB_MEM
+
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+SHOP
+SSN_UNIQ                                                     U
+TB_MEM
+
+SHOP
+MEM_CD_CK                                                    C
+TB_MEM
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+
+SHOP
+SYS_C007129                                                  P
+TB_PRODUCT
+
+SHOP
+SYS_C007130                                                  C
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+TB_ORDER
+
+SHOP
+SYS_C007131                                                  C
+TB_ORDER
+
+SHOP
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+SYS_C007132                                                  C
+TB_ORDER
+
+SHOP
+SYS_C007133                                                  C
+TB_ORDER
+
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+SHOP
+SYS_C007134                                                  C
+TB_ORDER
+
+SHOP
+SYS_C007135                                                  C
+TB_ORDER
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+
+SHOP
+SYS_C007136                                                  C
+TB_ORDER
+
+SHOP
+SYS_C007137                                                  C
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+TB_ORDER
+
+SHOP
+SYS_C007138                                                  C
+TB_ORDER
+
+SHOP
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+SYS_C007139                                                  P
+TB_ORDER
+
+SHOP
+ORD_MEM_KF                                                   R
+TB_ORDER
+
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+SHOP
+ORDP_MEM_KF                                                  R
+TB_ORDER_PRODUCT
+
+SHOP
+PRDP_MEM_KF                                                  R
+TB_ORDER_PRODUCT
+
+OWNER
+----------------------------------------------------------------------------------------------------
+CONSTRAINT_NAME                                              CO
+------------------------------------------------------------ --
+TABLE_NAME
+------------------------------------------------------------
+
+
+23 rows selected.
+
+SQL> set linesize 1000
+SQL> select owner, CONSTRAINT_NAME, CONSTRAINT_TYPE,TABLE_NAME from user_constraints;
+
+OWNER                                                                                                                                                                                                                                            CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP                                                                                                                                                                                                                                             SYS_C007120                                                  C  TB_MEM
+SHOP                                                                                                                                                                                                                                             SYS_C007121                                                  C  TB_MEM
+SHOP                                                                                                                                                                                                                                             SYS_C007122                                                  C  TB_MEM
+SHOP                                                                                                                                                                                                                                             SYS_C007123                                                  C  TB_MEM
+SHOP                                                                                                                                                                                                                                             SYS_C007124                                                  C  TB_MEM
+SHOP                                                                                                                                                                                                                                             SYS_C007125                                                  C  TB_MEM
+SHOP                                                                                                                                                                                                                                             SYS_C007126                                                  P  TB_MEM
+SHOP                                                                                                                                                                                                                                             SSN_UNIQ                                                     U  TB_MEM
+SHOP                                                                                                                                                                                                                                             MEM_CD_CK                                                    C  TB_MEM
+SHOP                                                                                                                                                                                                                                             SYS_C007129                                                  P  TB_PRODUCT
+SHOP                                                                                                                                                                                                                                             SYS_C007130                                                  C  TB_ORDER
+
+OWNER                                                                                                                                                                                                                                            CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP                                                                                                                                                                                                                                             SYS_C007131                                                  C  TB_ORDER
+SHOP                                                                                                                                                                                                                                             SYS_C007132                                                  C  TB_ORDER
+SHOP                                                                                                                                                                                                                                             SYS_C007133                                                  C  TB_ORDER
+SHOP                                                                                                                                                                                                                                             SYS_C007134                                                  C  TB_ORDER
+SHOP                                                                                                                                                                                                                                             SYS_C007135                                                  C  TB_ORDER
+SHOP                                                                                                                                                                                                                                             SYS_C007136                                                  C  TB_ORDER
+SHOP                                                                                                                                                                                                                                             SYS_C007137                                                  C  TB_ORDER
+SHOP                                                                                                                                                                                                                                             SYS_C007138                                                  C  TB_ORDER
+SHOP                                                                                                                                                                                                                                             SYS_C007139                                                  P  TB_ORDER
+SHOP                                                                                                                                                                                                                                             ORD_MEM_KF                                                   R  TB_ORDER
+SHOP                                                                                                                                                                                                                                             ORDP_MEM_KF                                                  R  TB_ORDER_PRODUCT
+
+OWNER                                                                                                                                                                                                                                            CONSTRAINT_NAME                                              CO TABLE_NAME
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------------------------ -- ------------------------------------------------------------
+SHOP                                                                                                                                                                                                                                             PRDP_MEM_KF                                                  R  TB_ORDER_PRODUCT
+
+23 rows selected.
+
+SQL> set linesize 200
+SQL>
+SQL> select m.MEM_NM, o.ORD_AMT
+  2  from TB_MEM m, TM_ORDER o
+  3  where m.MEM_ID=o.MEM_ID
+  4  ;
+from TB_MEM m, TM_ORDER o
+               *
+ERROR at line 2:
+ORA-00942: table or view does not exist
+
+
+SQL> select m.MEM_NM, o.ORD_AMT
+  2  from TB_MEM m, TB_ORDER o
+  3  where m.MEM_ID=o.MEM_ID
+  4  ;
+
+MEM_NM                  ORD_AMT
+-------------------- ----------
+홍길동                   195000
+관리자                   288000
+
+SQL> select m.MEM_NM, o.ORD_AMT
+  2  from TB_MEM m, TB_ORDER o
+  3  where m.MEM_ID=o.MEM_ID
+  4  ;
+
+MEM_NM                  ORD_AMT
+-------------------- ----------
+홍길동                   195000
+관리자                   288000
+
+SQL> select p.PRD_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2  from TB_PRODUCT p , TB_ORDER_PRODUCT op
+  3  where p.PRD_NO = op.PRD_NO
+  4  ;
+select p.PRD_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select p.PRD_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2  from TB_PRODUCT p , TB_ORDER_PRODUCT op
+  3  where p.PRD_NO = op.PRD_NO
+  4  group by p.PRD_NM
+  5  ;
+
+PRD_NM                                                       SUM(P.SELL_PRC_UNIT*OP.QTY)
+------------------------------------------------------------ ---------------------------
+올인원크리스                                                                      273000
+위니네크리스                                                                      156000
+블론디네크리스                                                                     54000
+
+SQL> select m.MEM_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2   from TB_MEM m, TB_ORDER o
+  3   where m.MEM_ID=o.MEM_ID
+  4  group by m.MEM_NM
+  5  ;
+select m.MEM_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+                                     *
+ERROR at line 1:
+ORA-00904: "OP"."QTY": invalid identifier
+
+
+SQL> select m.MEM_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2  from TB_MEM m, TB_PRODUCT p, TB_ORDER_PRODUCT op
+  3  where p.
+  4
+SQL>
+SQL> select m.MEM_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2  from TB_MEM m, TB_PRODUCT p, TB_ORDER_PRODUCT op, TB_ORDER o
+  3  where m.MEM_ID=o.MEM_ID AND p.PRD_NO=op.PRD_NO
+  4  ;
+select m.MEM_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select m.MEM_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2  from TB_MEM m, TB_PRODUCT p, TB_ORDER_PRODUCT op, TB_ORDER o
+  3  where m.MEM_ID=o.MEM_ID AND p.PRD_NO=op.PRD_NO
+  4  group by m.MEM_NM
+  5  ;
+
+MEM_NM               SUM(P.SELL_PRC_UNIT*OP.QTY)
+-------------------- ---------------------------
+홍길동                                    483000
+관리자                                    483000
+
+SQL> select m.MEM_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2  from TB_MEM m, TB_PRODUCT p, TB_ORDER_PRODUCT op, TB_ORDER o
+  3  where m.MEM_ID=o.MEM_ID AND p.PRD_NO=op.PRD_NO AND o.ORD_NO=op.ORD_NO
+  4  group by m.MEM_NM
+  5  ;
+
+MEM_NM               SUM(P.SELL_PRC_UNIT*OP.QTY)
+-------------------- ---------------------------
+홍길동                                    195000
+관리자                                    288000
+
+SQL> select * from TB_ORDER;
+
+ORD_NO                   MEM_ID                            ORD_AMT RCVR_NM              RCVR_TEL_NO
+------------------------ ------------------------------ ---------- -------------------- --------------------------
+RCVR_ADDR
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DLV_CORP_NO                DLV_REQ                                                                                              ORD_ST ORD_DTM
+-------------------------- ---------------------------------------------------------------------------------------------------- ------ --------------------------------
+ORD201912232             user01                             195000 홍길동               010-234-4567
+서울시 서초구 서초동 서초아파트 101동 1001호
+11ST                       경비실에 보관해 주세요                                                                               Y      20191223135849
+
+ORD201912233             admin01                            288000 관리자               010-100-2000
+서울시 서초구 서초동 삼성아파트 201동 1201호
+COOPANG                    부재시 연락 주세요                                                                                   Y      20191223135858
+
+ORD_NO                   MEM_ID                            ORD_AMT RCVR_NM              RCVR_TEL_NO
+------------------------ ------------------------------ ---------- -------------------- --------------------------
+RCVR_ADDR
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DLV_CORP_NO                DLV_REQ                                                                                              ORD_ST ORD_DTM
+-------------------------- ---------------------------------------------------------------------------------------------------- ------ --------------------------------
+
+
+SQL> select * from TB_ORDER_PRODUCT;
+
+ORD_NO                   PRD_NO                          QTY
+------------------------ ------------------------ ----------
+ORD201912232             PRD000000001                      3
+ORD201912232             PRD000000002                      2
+ORD201912233             PRD000000003                      3
+ORD201912233             PRD000000001                      1
+ORD201912233             PRD000000002                      5
+
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'user01', 195000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', '11ST', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 2)
+  6  select * from dual;
+
+3 rows created.
+
+SQL>
+SQL>
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'admin01', 288000, '관리자', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'COOPANG', '부재시 연락 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000003', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 1)
+  6  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 5)
+  7  select * from dual;
+
+4 rows created.
+
+SQL> select * from TB_MEM;
+
+MEM_ID                         MEM_NM               MEM_CD               PWD                                      PWD_HINT                                 PWD_HINT_ANS
+------------------------------ -------------------- -------------------- ---------------------------------------- ---------------------------------------- ----------------------------------------
+SSN                        BIRTH_DT         MA TEL_NO                     CELL_NO
+-------------------------- ---------------- -- -------------------------- --------------------------
+ADDR
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+EMAIL                                                        EM MEM_REG_DTM
+------------------------------------------------------------ -- --------------------------------
+user01                         홍길동               Guest                user01                                   초등학교는?                              서울초등학교
+8010101234567              19801010         F  02-555-4567                010-234-4567
+서울시 서초구 서초동 서초아파트 101동 1001호
+abcd@email.com                                               Y  20191223131014
+
+
+MEM_ID                         MEM_NM               MEM_CD               PWD                                      PWD_HINT                                 PWD_HINT_ANS
+------------------------------ -------------------- -------------------- ---------------------------------------- ---------------------------------------- ----------------------------------------
+SSN                        BIRTH_DT         MA TEL_NO                     CELL_NO
+-------------------------- ---------------- -- -------------------------- --------------------------
+ADDR
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+EMAIL                                                        EM MEM_REG_DTM
+------------------------------------------------------------ -- --------------------------------
+admin01                        관리자               VIP                  admin01                                  고등학교는?                              삼성고등학교
+7010101234567              19701010         F  02-555-1000                010-100-2000
+서울시 서초구 서초동 삼성아파트 201동 1201호
+admin@email.com                                              Y  20191223131014
+
+
+SQL> set linesize 500
+SQL> select * from TB_MEM;
+
+MEM_ID                         MEM_NM               MEM_CD               PWD                                      PWD_HINT                                 PWD_HINT_ANS                             SSN                        BIRTH_DT         MA TEL_NO                     CELL_NO                    ADDR
+------------------------------ -------------------- -------------------- ---------------------------------------- ---------------------------------------- ---------------------------------------- -------------------------- ---------------- -- -------------------------- -------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+EMAIL                                                        EM MEM_REG_DTM
+------------------------------------------------------------ -- --------------------------------
+user01                         홍길동               Guest                user01                                   초등학교는?                              서울초등학교                             8010101234567              19801010         F  02-555-4567                010-234-4567               서울시 서초구 서초동 서초아파트 101동 1001호
+abcd@email.com                                               Y  20191223131014
+
+admin01                        관리자               VIP                  admin01                                  고등학교는?                              삼성고등학교                             7010101234567              19701010         F  02-555-1000                010-100-2000               서울시 서초구 서초동 삼성아파트 201동 1201호
+admin@email.com                                              Y  20191223131014
+
+
+SQL> select * from TB_ORDER;
+
+ORD_NO                   MEM_ID                            ORD_AMT RCVR_NM              RCVR_TEL_NO                RCVR_ADDR                                                                                                                                                                                                DLV_CORP_NO                DLV_REQ                                                                                              ORD_ST ORD_DTM
+------------------------ ------------------------------ ---------- -------------------- -------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------------------- ---------------------------------------------------------------------------------------------------- ------ --------------------------------
+ORD201912232             user01                             195000 홍길동               010-234-4567               서울시 서초구 서초동 서초아파트 101동 1001호                                                                                                                                                             11ST                       경비실에 보관해 주세요                                                                               Y      20191223135849
+ORD201912233             admin01                            288000 관리자               010-100-2000               서울시 서초구 서초동 삼성아파트 201동 1201호                                                                                                                                                             COOPANG                    부재시 연락 주세요                                                                                   Y      20191223135858
+ORD201912234             user01                             195000 홍길동               010-234-4567               서울시 서초구 서초동 서초아파트 101동 1001호                                                                                                                                                             11ST                       경비실에 보관해 주세요                                                                               Y      20191223142501
+ORD201912235             admin01                            288000 관리자               010-100-2000               서울시 서초구 서초동 삼성아파트 201동 1201호                                                                                                                                                             COOPANG                    부재시 연락 주세요                                                                                   Y      20191223142504
+
+SQL> drop table TB_ORDER_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_ORDER;
+
+Table dropped.
+
+SQL> drop table TB_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_MEM;
+
+Table dropped.
+
+SQL> CREATE SEQUENCE ORD_NO_SEQ
+  2   INCREMENT BY 1
+  3   START WITH 0001
+  4   MINVALUE   0001
+  5   MAXVALUE   9999
+  6   CYCLE
+  7   CACHE 1000
+  8   ORDER;
+CREATE SEQUENCE ORD_NO_SEQ
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL>
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+
+Table altered.
+
+SQL>
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(200),
+  6  SELL_PRC_UNIT integer,
+  7  SELL_START_DT char(16),
+  8  SELL_END_DT char(16),
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL>
+SQL> create table TB_ORDER(
+  2  ORD_NO char(12) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT integer not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(100) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM char(16) not null);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID);
+
+Table altered.
+
+SQL>
+SQL>
+SQL>
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(12),
+  3  PRD_NO char(12),
+  4  QTY integer);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+
+Table altered.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'Guest', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('admin01', '관리자', 'VIP', 'admin01', '고등학교는?', '삼성고등학교', '7010101234567', '19701010', 'F', '02-555-1000', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'admin@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>  INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000002', '올인원크리스', 'CAT000000005', '진주의방울방울이 끝내줍니다.', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image2.jpg', 'acc_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000003', '블론디네크리스', 'CAT000000005', '조금 있으면 품절이예요 빨리 서두르세요', 18000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image3.jpg', 'acc_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000004', '로렐라이네크리스', 'CAT000000005', 'Best of Best', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image4.jpg', 'acc_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000005', '스트로우네크리스', 'CAT000000005', '악세사리 멋져요', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image5.jpg', 'acc_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000006', '글로아셔링ops', 'CAT000000001', '사랑스런 셔링의 루즈핏', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images1.jpg', 'dress_images1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000007', '바이블ops', 'CAT000000001', '큐트한 라인감이 여성스러워요', 23900, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images2.jpg', 'dress_images2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000008', '텐디박스ops', 'CAT000000001', '편안해요 홈웨어로도 좋아요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images3.jpg', 'dress_images3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000009', '마리안 ops', 'CAT000000001', '살랑거리는 핏이 가녀린 여성미를 연출해줄 봄 원피스', 36000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images4.jpg', 'dress_images4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000010', '디아망 ops', 'CAT000000001', '시스루 디테일로 여성스러움에 은은한 섹시함까지', 59800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images5.jpg', 'dress_images5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000011', 'no.3932', 'CAT000000002', '썸머 나시 남다른 비치웨어로', 9800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image1.gif', 'top_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000012', '숄더홀믹스', 'CAT000000002', '네추럴한 가오리핏으로 순수하고 께끗한 이미지를 up', 38000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image2.jpg', 'top_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000013', '클로라모티브', 'CAT000000002', '넉넉한 핏과 레이스패턴으로 여리하고 여성스러워요', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image3.jpg', 'top_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000014', '타임포켓', 'CAT000000002', '부드러운 소재로 착용감 정말 편해요', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image4.jpg', 'top_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000015', '글로니린넨', 'CAT000000002', '체형커버에도 좋은 장점', 27400, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image5.jpg', 'top_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000016', '7부쿨팬츠', 'CAT000000003', '여름까지 쭉 입기 좋은 소재와 베이직한 디자인으로 소장가치 up',14500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image1.gif', 'bottom_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000017', '미카베이직펜츠', 'CAT000000003', '세련된 느낌이 참좋아요', 24500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image2.jpg', 'bottom_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000018', '빈스큐롯반펜츠', 'CAT000000003', '가볍고 시원하게 즐겨주세요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image3.jpg', 'bottom_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000019', '브루노배기팬츠', 'CAT000000003', '화사한 플라워 패턴으로 스타일UP ', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image4.jpg', 'bottom_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000020', '히스토리팬츠', 'CAT000000003', '신축성좋은 슬림핏데님', 27000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image5.jpg', 'bottom_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000021', '필립차이나 사파리', 'CAT000000004', '네추럴한 핏과 가벼운 소재로 편하게 걸치기 좋아요',61800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image1.gif', 'outer_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000022', '띠어리nb', 'CAT000000004', '아우터 셔츠로 연출하기 좋은 실용적인 아이템', 59000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image2.jpg', 'outer_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000023', '메종더블', 'CAT000000004', '날씬하게 떨어지는 핏이 정말 매력적인', 73000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image3.jpg', 'outer_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000024', '세인트린넨jk', 'CAT000000004', '린넨 100% 고급스러운 자켓!소재,디자인,핏,마감 정말 좋은 퀄리티메이드 아이템!', 68000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image4.jpg', 'outer_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000025', '메이퀸 진주 조끼', 'CAT000000004', '가볍게 걸치기만해도 멋스러운 아이템!', 49300, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image5.jpg', 'outer_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'user01', 195000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', '11ST', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 2)
+  6  select * from dual;
+values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'user01', 195000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', '11ST', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                           *
+ERROR at line 3:
+ORA-12899: value too large for column "SHOP"."TB_ORDER"."ORD_NO" (actual: 15, maximum: 12)
+
+
+SQL>
+SQL>
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'admin01', 288000, '관리자', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'COOPANG', '부재시 연락 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000003', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 1)
+  6  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 5)
+  7  select * from dual;
+values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'admin01', 288000, '관리자', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'COOPANG', '부재시 연락 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+                                           *
+ERROR at line 3:
+ORA-12899: value too large for column "SHOP"."TB_ORDER"."ORD_NO" (actual: 15, maximum: 12)
+
+
+SQL> drop table TB_ORDER_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_ORDER;
+
+Table dropped.
+
+SQL> drop table TB_PRODUCT;
+
+Table dropped.
+
+SQL> drop table TB_MEM;
+
+Table dropped.
+
+SQL> create table TB_MEM(
+  2  MEM_ID varchar2(15) primary key,
+  3  MEM_NM varchar2(10),
+  4  MEM_CD varchar2(10),
+  5  PWD varchar2(20) not null,
+  6  PWD_HINT varchar(20) not null,
+  7  PWD_HINT_ANS varchar(20) not null,
+  8  SSN char(13) not null,
+  9  BIRTH_DT char(8),
+ 10  MALE_FLG char(1) not null,
+ 11  TEL_NO varchar2(13),
+ 12  CELL_NO varchar2(13),
+ 13  ADDR varchar2(100) not null,
+ 14  EMAIL varchar(30),
+ 15  EMAIL_RCV_FLG char(1),
+ 16  MEM_REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL> alter table TB_MEM
+  2  add constraint ssn_uniq unique(SSN)
+  3  add constraint mem_cd_ck check(MEM_CD in ('Silver', 'Gold', 'VIP', 'VVIP', 'Guest'));
+
+Table altered.
+
+SQL>
+SQL> create table TB_PRODUCT(
+  2  PRD_NO char(12) primary key,
+  3  PRD_NM varchar2(30),
+  4  CATEGORY_NO char(12),
+  5  PRD_DES varchar2(200),
+  6  SELL_PRC_UNIT integer,
+  7  SELL_START_DT char(16),
+  8  SELL_END_DT char(16),
+  9  DLV_CONSTRAINT varchar2(50),
+ 10  AS_FLG char(1),
+ 11  RETURN_FLG char(1),
+ 12  IMG_ORG_FILE_NM varchar2(50),
+ 13  IMG_GEN_FILE_NM varchar2(50),
+ 14  REG_ID varchar2(20),
+ 15  REG_DTM char(16));
+
+Table created.
+
+SQL>
+SQL>
+SQL> create table TB_ORDER(
+  2  ORD_NO char(15) primary key,
+  3  MEM_ID varchar2(15) not null,
+  4  ORD_AMT integer not null,
+  5  RCVR_NM varchar2(10) not null,
+  6  RCVR_TEL_NO varchar2(13) not null,
+  7  RCVR_ADDR varchar2(100) not null,
+  8  DLV_CORP_NO varchar2(13) not null,
+  9  DLV_REQ varchar2(50) not null,
+ 10  ORD_STAT_CD char(3) not null,
+ 11  ORD_DTM char(16) not null);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER
+  2  add constraint ord_mem_kf foreign key(MEM_ID)
+  3  references TB_MEM(MEM_ID);
+
+Table altered.
+
+SQL>
+SQL>
+SQL>
+SQL> create table TB_ORDER_PRODUCT(
+  2  ORD_NO char(15),
+  3  PRD_NO char(12),
+  4  QTY integer);
+
+Table created.
+
+SQL>
+SQL> alter table TB_ORDER_PRODUCT
+  2  add constraint ordp_mem_kf foreign key(ORD_NO)
+  3  references TB_ORDER(ORD_NO)
+  4  add constraint prdp_mem_kf foreign key(PRD_NO)
+  5  references TB_PRODUCT(PRD_NO);
+
+Table altered.
+
+SQL>
+SQL> CREATE SEQUENCE ORD_NO_SEQ
+  2   INCREMENT BY 1
+  3   START WITH 0001
+  4   MINVALUE   0001
+  5   MAXVALUE   9999
+  6   CYCLE
+  7   CACHE 1000
+  8   ORDER;
+CREATE SEQUENCE ORD_NO_SEQ
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> DROP sequence ORD_NO_SEQ;
+
+Sequence dropped.
+
+SQL> CREATE SEQUENCE ORD_NO_SEQ
+  2   INCREMENT BY 1
+  3   START WITH 0001
+  4   MINVALUE   0001
+  5   MAXVALUE   9999
+  6   CYCLE
+  7   CACHE 1000
+  8   ORDER;
+
+Sequence created.
+
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('user01', '홍길동', 'Guest', 'user01', '초등학교는?', '서울초등학교', '8010101234567', '19801010', 'F', '02-555-4567', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', 'abcd@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_MEM(MEM_ID, MEM_NM, MEM_CD, PWD, PWD_HINT, PWD_HINT_ANS, SSN, BIRTH_DT, MALE_FLG, TEL_NO, CELL_NO, ADDR, EMAIL, EMAIL_RCV_FLG, MEM_REG_DTM)
+  2  VALUES('admin01', '관리자', 'VIP', 'admin01', '고등학교는?', '삼성고등학교', '7010101234567', '19701010', 'F', '02-555-1000', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'admin@email.com', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>  INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000001', '위니네크리스', 'CAT000000005', '착용하셨을때 떨어지는 라인이 정말 예뻐요', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image1.jpg', 'acc_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000002', '올인원크리스', 'CAT000000005', '진주의방울방울이 끝내줍니다.', 39000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image2.jpg', 'acc_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000003', '블론디네크리스', 'CAT000000005', '조금 있으면 품절이예요 빨리 서두르세요', 18000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image3.jpg', 'acc_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000004', '로렐라이네크리스', 'CAT000000005', 'Best of Best', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image4.jpg', 'acc_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000005', '스트로우네크리스', 'CAT000000005', '악세사리 멋져요', 15000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'acc_image5.jpg', 'acc_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000006', '글로아셔링ops', 'CAT000000001', '사랑스런 셔링의 루즈핏', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images1.jpg', 'dress_images1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000007', '바이블ops', 'CAT000000001', '큐트한 라인감이 여성스러워요', 23900, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images2.jpg', 'dress_images2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000008', '텐디박스ops', 'CAT000000001', '편안해요 홈웨어로도 좋아요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images3.jpg', 'dress_images3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000009', '마리안 ops', 'CAT000000001', '살랑거리는 핏이 가녀린 여성미를 연출해줄 봄 원피스', 36000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images4.jpg', 'dress_images4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000010', '디아망 ops', 'CAT000000001', '시스루 디테일로 여성스러움에 은은한 섹시함까지', 59800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'dress_images5.jpg', 'dress_images5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000011', 'no.3932', 'CAT000000002', '썸머 나시 남다른 비치웨어로', 9800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image1.gif', 'top_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000012', '숄더홀믹스', 'CAT000000002', '네추럴한 가오리핏으로 순수하고 께끗한 이미지를 up', 38000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image2.jpg', 'top_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000013', '클로라모티브', 'CAT000000002', '넉넉한 핏과 레이스패턴으로 여리하고 여성스러워요', 22000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image3.jpg', 'top_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000014', '타임포켓', 'CAT000000002', '부드러운 소재로 착용감 정말 편해요', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image4.jpg', 'top_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000015', '글로니린넨', 'CAT000000002', '체형커버에도 좋은 장점', 27400, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'top_image5.jpg', 'top_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000016', '7부쿨팬츠', 'CAT000000003', '여름까지 쭉 입기 좋은 소재와 베이직한 디자인으로 소장가치 up',14500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image1.gif', 'bottom_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000017', '미카베이직펜츠', 'CAT000000003', '세련된 느낌이 참좋아요', 24500, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image2.jpg', 'bottom_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000018', '빈스큐롯반펜츠', 'CAT000000003', '가볍고 시원하게 즐겨주세요', 24000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image3.jpg', 'bottom_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000019', '브루노배기팬츠', 'CAT000000003', '화사한 플라워 패턴으로 스타일UP ', 26000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image4.jpg', 'bottom_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000020', '히스토리팬츠', 'CAT000000003', '신축성좋은 슬림핏데님', 27000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'bottom_image5.jpg', 'bottom_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000021', '필립차이나 사파리', 'CAT000000004', '네추럴한 핏과 가벼운 소재로 편하게 걸치기 좋아요',61800, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image1.gif', 'outer_image1.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000022', '띠어리nb', 'CAT000000004', '아우터 셔츠로 연출하기 좋은 실용적인 아이템', 59000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image2.jpg', 'outer_image2.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000023', '메종더블', 'CAT000000004', '날씬하게 떨어지는 핏이 정말 매력적인', 73000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image3.jpg', 'outer_image3.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000024', '세인트린넨jk', 'CAT000000004', '린넨 100% 고급스러운 자켓!소재,디자인,핏,마감 정말 좋은 퀄리티메이드 아이템!', 68000, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image4.jpg', 'outer_image4.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO TB_PRODUCT(PRD_NO, PRD_NM, CATEGORY_NO, PRD_DES, SELL_PRC_UNIT, SELL_START_DT, SELL_END_DT, DLV_CONSTRAINT, AS_FLG, RETURN_FLG, IMG_ORG_FILE_NM, IMG_GEN_FILE_NM, REG_ID, REG_DTM)
+  2  VALUES('PRD000000025', '메이퀸 진주 조끼', 'CAT000000004', '가볍게 걸치기만해도 멋스러운 아이템!', 49300, '20140201', '20141201', '국내 배송만 됩니다.', 'Y', 'Y',  'outer_image5.jpg', 'outer_image5.jpg', 'admin', to_char(sysdate, 'YYYYMMDDHH24MISS'))  ;
+
+1 row created.
+
+SQL>
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'user01', 195000, '홍길동', '010-234-4567', '서울시 서초구 서초동 서초아파트 101동 1001호', '11ST', '경비실에 보관해 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 2)
+  6  select * from dual;
+
+3 rows created.
+
+SQL>
+SQL>
+SQL> INSERT ALL
+  2  INTO TB_ORDER(ORD_NO, MEM_ID, ORD_AMT, RCVR_NM, RCVR_TEL_NO, RCVR_ADDR, DLV_CORP_NO, DLV_REQ, ORD_STAT_CD, ORD_DTM)
+  3  values('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.NEXTVAL, 'admin01', 288000, '관리자', '010-100-2000', '서울시 서초구 서초동 삼성아파트 201동 1201호', 'COOPANG', '부재시 연락 주세요', 'Y', to_char(sysdate, 'YYYYMMDDHH24MISS'))
+  4  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000003', 3)
+  5  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000001', 1)
+  6  INTO TB_ORDER_PRODUCT(ORD_NO, PRD_NO, QTY) values ('ORD'||to_char(sysdate, 'YYYYMMDD')||ORD_NO_SEQ.CURRVAL, 'PRD000000002', 5)
+  7  select * from dual;
+
+4 rows created.
+
+SQL> select * from TB_ORDER;
+
+ORD_NO                         MEM_ID                            ORD_AMT RCVR_NM              RCVR_TEL_NO                RCVR_ADDR                                                                                                                                                                                                DLV_CORP_NO                DLV_REQ                                                                                              ORD_ST ORD_DTM
+------------------------------ ------------------------------ ---------- -------------------- -------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------------------- ---------------------------------------------------------------------------------------------------- ------ --------------------------------
+ORD201912231                   user01                             195000 홍길동               010-234-4567               서울시 서초구 서초동 서초아파트 101동 1001호                                                                                                                                                             11ST                       경비실에 보관해 주세요                                                                               Y      20191223143556
+ORD201912232                   admin01                            288000 관리자               010-100-2000               서울시 서초구 서초동 삼성아파트 201동 1201호                                                                                                                                                             COOPANG                    부재시 연락 주세요                                                                                   Y      20191223143556
+
+SQL> select * from TB_ORDER_PRODUCT;
+
+ORD_NO                         PRD_NO                          QTY
+------------------------------ ------------------------ ----------
+ORD201912231                   PRD000000001                      3
+ORD201912231                   PRD000000002                      2
+ORD201912232                   PRD000000003                      3
+ORD201912232                   PRD000000001                      1
+ORD201912232                   PRD000000002                      5
+
+SQL>
+SQL> select p.PRD_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2  from TB_PRODUCT p , TB_ORDER_PRODUCT op
+  3  where p.PRD_NO = op.PRD_NO
+  4  group by p.PRD_NM
+  5  ;
+
+PRD_NM                                                       SUM(P.SELL_PRC_UNIT*OP.QTY)
+------------------------------------------------------------ ---------------------------
+올인원크리스                                                                      273000
+위니네크리스                                                                      156000
+블론디네크리스                                                                     54000
+
+SQL>
+SQL>
+SQL> select m.MEM_NM, sum(p.SELL_PRC_UNIT*op.QTY)
+  2  from TB_MEM m, TB_PRODUCT p, TB_ORDER_PRODUCT op, TB_ORDER o
+  3  where m.MEM_ID=o.MEM_ID AND p.PRD_NO=op.PRD_NO AND o.ORD_NO=op.ORD_NO
+  4  group by m.MEM_NM
+  5  ;
+
+MEM_NM               SUM(P.SELL_PRC_UNIT*OP.QTY)
+-------------------- ---------------------------
+홍길동                                    195000
+관리자                                    288000
+
+SQL>

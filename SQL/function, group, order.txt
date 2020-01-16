@@ -1,0 +1,46 @@
+SELECT job, count(job)
+FROM emp
+where hiredate not like '83%'
+group by job
+having count(job)>=3;
+
+
+
+select substr(HIRE_DATE,4,2) as 월,count(EMPLOYEE_ID) as 입사자수
+from EMPLOYEES
+group by substr(HIRE_DATE,4,2)
+order by substr(HIRE_DATE,4,2);
+
+
+
+
+
+
+--문제0
+SELECT ENAME, MGR, nvl2(MGR, '담당', '관리자')as 관리자
+from emp;
+
+--문제1
+select nvl(to_char(DEPARTMENT_ID),'No Department') as 부서번호, round(avg(SALARY)) as 평균급여
+from EMPLOYEES
+group by DEPARTMENT_ID
+having round(avg(SALARY))>6000;
+
+--문제2
+SELECT DEPARTMENT_ID, AVG(SALARY)
+from EMPLOYEES
+group by DEPARTMENT_ID
+having AVG(SALARY)>=10000;
+
+--문제3
+SELECT DEPARTMENT_ID, AVG(SALARY)
+from EMPLOYEES
+WHERE DEPARTMENT_ID not in(40,50)
+group by DEPARTMENT_ID
+order by AVG(SALARY) DESC;
+
+--문제4
+SELECT FIRST_NAME, LAST_NAME, SALARY, COMMISSION_PCT, SALARY+SALARY*COMMISSION_PCT as "TO"
+from EMPLOYEES
+where COMMISSION_PCT is not null
+order by "TO" desc;
