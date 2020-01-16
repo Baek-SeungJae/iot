@@ -1,0 +1,13 @@
+create table customer(
+	id varchar2(20) primary key,
+	pass varchar2(20) not null,
+	name varchar2(20),
+	regdate date,
+	point number,
+	addr varchar2(20));
+
+insert all
+into customer(id, pass, name, regdate, point, addr) values('jang',1111,'장동건',to_char(sysdate,'YYYY/MM/DD'),1000,'서울')
+into customer(id, pass, name, regdate, point, addr) values('lee',2222,'이병헌',to_char(sysdate,'YYYY/MM/DD'),1000,'서울')
+into customer(id, pass, name, regdate, point, addr) values('kang',3333,'강동원',to_char(sysdate,'YYYY/MM/DD'),1000,'서울')
+select * from dual;

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		str1 = "";
+		$("#btn").on("click", function() {
+			$("#comment").empty();
+			str1 = $("#textbox").val();
+			str2 = [];
+			if (str1.indexOf("@") >= 0) {
+				str2 = str1.split("@");
+				for (i = 0; i < str2.length; i++) {
+					str3 = str2[i].split(" ");
+					for (j = 0; j < str3.length; j++) {
+						if (j == 0)
+							$("#comment").append("<u>" + str3[j] + "</u>");
+						else
+							$("#comment").append(" " + str3[j]);
+					}
+				}
+			} else
+				$("#comment").text(str1);
+		});
+				// @를 가지고있다면 로직통과 가지고 있지 않으면 else
+				// @로 먼저 자르고 " "로 자르고 첫번째 index만 밑줄
+	});
+</script>
+</head>
+<body>
+	<input type="text" id="textbox" />
+	<input type="button" id="btn" value="입력" />
+	<div id=comment></div>
+</body>
+</html>

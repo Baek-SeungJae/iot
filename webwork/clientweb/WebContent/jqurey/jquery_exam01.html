@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jquery</title>
+<link rel="stylesheet" href="../common/css/my_style2.css"></link>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		hit=$("<p>방문자수: "+Math.round((Math.random()*1000))+"</p>");
+		$(".gardenimg").mouseover(function() {
+
+			$(this).append(hit);
+		});
+		$(".gardenimg").mouseleave(function() {
+			$(this).children().last().remove();
+			hit=$("<p>방문자수: "+Math.round((Math.random()*1000))+"</p>");
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="header">
+		<h2>아침고요수목원~</h2>
+	</div>
+	<div id="main">
+		<div class="gardenimg">
+			<img src="../images/m_garden01.jpg" />
+		</div>
+		<div class="gardenimg">
+			<img src="../images/m_garden02.jpg" />
+		</div>
+		<div class="gardenimg">
+			<img src="../images/m_garden03.jpg" />
+		</div>
+		<div class="gardenimg">
+			<img src="../images/m_garden05.jpg" />
+		</div>
+	</div>
+	<script>
+		
+	</script>
+</body>
+</html>

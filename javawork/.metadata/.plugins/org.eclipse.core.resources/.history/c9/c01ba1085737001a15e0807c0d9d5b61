@@ -1,0 +1,50 @@
+package api.io;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class FileCopy {
+
+	public static void main(String[] args) {
+		FileReader fr = null;
+		FileWriter fw= null;
+		try {
+			fr = new FileReader("src/api/ioFileTest01.java");
+			try {
+				fw= new FileWriter("src/data/copy_result.txt");
+				
+				while(true) {
+					int data = fr.read();
+					if(data==-1)
+						break;
+					fw.write(data);
+				}
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+}

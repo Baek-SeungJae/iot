@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div class="test1">jquery~~~</div>
+		<div class="test2">jquery~~~~</div>
+		<div id="test3">jquery~~~~</div>
+		<div id="test4">jquery~~~~</div>
+		<div id="test5">jquery~~~~</div>
+	</div>
+	<p>jQuery 연습중...</p>
+	<div id="result"></div>
+	<div id="result2"></div>
+	<div id="result3">test진행</div>
+	<form>
+		<input type="number" id="data" />
+		<input type="number" id="data2" />
+		<input type="button" id="btn" value="값가져오기" />
+	</form>
+	<script type="text/javascript">
+		//DOM노드 액세스
+		$(document).ready(function() {
+			$("p").hide();
+			$("#result").text("<h1>div태그 내부에 텍스트를 추가하기</h1>");
+			$("#result2").html("<h1>div태그 내부에 텍스트를 추가하기</h1>");
+			$("#data").on("keyup",function(){
+				myval = parseInt($("#data").val())+100000;
+				$("#result3").text(myval);
+			});
+			$("#btn").on("click", function() {
+				textval = $("#result3").text();
+				$("#data2").val(textval);
+			});
+		});
+	</script>
+</body>
+</html>

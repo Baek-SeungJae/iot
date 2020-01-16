@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function test1() {
+		num1 = 100;
+		num2 = 200;
+		result = num1 + num2;
+		alert(result);
+	}
+	function test2(num1, num2) {
+		result = num1 + num2;
+		alert(result);
+	}
+	function test3(num1, num2) {
+		result = num1 + num2;
+		return result;
+	}
+</script>
+</head>
+<body>
+	<script type="text/javascript">
+		test1();
+
+		num1 = parseInt(window.prompt("숫자를입력하세요"));
+		num2 = parseInt(window.prompt("숫자를입력하세요"));
+		alert(num1 + num2);
+
+		test2(num1, num2);
+
+		result = test3(num1, num2);
+		alert("test3의 호출결과: " + result);
+	</script>
+</body>
+</html>

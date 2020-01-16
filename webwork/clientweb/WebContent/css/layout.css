@@ -1,0 +1,47 @@
+@charset "EUC-KR";
+
+#outer{
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align: justify;
+}
+
+h1{
+	color : #7cb6b9;
+}
+
+#main{
+	width:70%;
+	float: left;
+}
+
+#garden{
+	background-color :#a7cece;
+	background-image:  url("../images/background.gif");
+	background-repeat: no-repeat;
+	padding-top: 20px;
+	padding-bottom : 50px;
+	padding-left: 100px;
+	padding-right:20px;
+	font-style: italic;
+	margin-left: 5%;
+	/*height:150px;
+	border-radius: 20px;
+	overflow: scroll; */
+}
+
+#garden02{
+	text-align:center;
+	float: right;
+	width:20%;
+}
+#garden02 h3{
+	
+}
+
+#footer{
+	text-align:center;
+	width: 100%;
+	clear:both;
+}

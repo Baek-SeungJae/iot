@@ -1,0 +1,20 @@
+package api.util;
+
+import java.util.HashSet;
+
+public class HashSetExam {
+
+	public static void main(String[] args) {
+		HashSet<Integer> set1 = new HashSet<Integer>();
+		HashSet<Integer> set2 = new HashSet<Integer>();
+		
+		for(int i=1; i<=10; i++)
+			set1.add(i);
+		for(int i=5; i<=15; i++)
+			set2.add(i);
+		
+		
+		
+	}
+
+}

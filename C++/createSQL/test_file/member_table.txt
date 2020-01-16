@@ -1,0 +1,12 @@
+mem_id	NUMBER
+mem_name	VARCHAR2(8)
+mem_nickname	VARCHAR2(20)
+mem_age	NUMBER
+mem_gender	CHAR(1)
+mem_home	CHAR(10)
+mem_office	CHAR(10)
+mem_neighbor	CHAR(10)
+mem_agegroup	NUMBER
+mem_business	char(3)
+mem_job	char(3)
+mem_report	NUMBER

@@ -1,0 +1,14 @@
+create table member (
+mem_id 	NUMBER ,
+mem_name 	VARCHAR2(8) 	not null,
+mem_nickname 	VARCHAR2(20) 	not null,
+mem_age 	NUMBER 	not null,
+mem_gender 	CHAR(1) 	not null,
+mem_home 	CHAR(10) ,
+mem_office 	CHAR(10) ,
+mem_neighbor 	CHAR(10) ,
+mem_agegroup 	NUMBER ,
+mem_business 	char(3) ,
+mem_job 	char(3) ,
+mem_report 	NUMBER ,
+primary key(mem_id) 	);

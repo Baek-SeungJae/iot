@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function allcheck() {
+		for (i = 0; i < myform.prd.length; i++) {
+			myform.prd[i].checked = myform.allchk.checked;
+		}
+	}
+	function calcprc() {
+		for (i = 0; i < myform.prd.length; i++) {
+			if (myform.prd[i].checked)
+				document.getElementsByClassName("calcprice")[i].innerHTML = eval(myform.count[i].value
+						* myform.price[i].value);
+			else
+				document.getElementsByClassName("calcprice")[i].innerHTML = "";
+		}
+	}
+	function totalcalc() {
+		sum = 0;
+		for (i = 0; i < myform.prd.length; i++) {
+			if (myform.prd[i].checked)
+				sum += eval(myform.count[i].value * myform.price[i].value);
+		}
+		document.getElementById("totalprice").innerHTML = sum;
+	}
+</script>
+</head>
+<body>
+	<form name="myform">
+		<table border="1" width="800">
+			<tr>
+				<td><input type="checkbox" name="allchk" onclick="allcheck();calcprc();totalcalc();" />항목명</td>
+				<td>상품정보</td>
+				<td>수량</td>
+				<td>판매가</td>
+				<td>구매예정가</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="prd" onclick="calcprc();totalcalc();" />완도미역</td>
+				<td><img src="../images/pro1.jpg" /></td>
+				<td><input type="number" name="count" value="1" onkeyup="calcprc();totalcalc();" onchange="calcprc();totalcalc();" /></td>
+				<td><input type="text" name="price" value="6900" /><span>원</span></td>
+				<td><span class="calcprice"></span><span>원</span></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="prd" onclick="calcprc();totalcalc();" />스카트 빨아쓰는 휴지</td>
+				<td><img src="../images/pro2.jpg" /></td>
+				<td><input type="number" name="count" value="1" onkeyup="calcprc();totalcalc();" onchange="calcprc();totalcalc();" /></td>
+				<td><input type="text" name="price" value="7800" /><span>원</span></td>
+				<td><span class="calcprice"></span><span>원</span></td>
+			</tr>
+			<tr>
+				<td colspan="6" align="right"><span id="totalprice"></span><span>원</span></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

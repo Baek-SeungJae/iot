@@ -1,0 +1,22 @@
+package api.io;
+
+import java.io.File;
+
+public class FileTest02 {
+
+	public static void main(String[] args) {
+		// C:/Users/booruruk/Desktop/iot/iotest
+		// 출력형태 
+		// a--------------[폴더]
+		// b--------------[폴더]
+		//ArrayTest01.java------------[파일:(파일의 사이즈)]
+		//.
+		//.
+		//.
+		
+		File file1 = new File("C:/Users/booruruk/Desktop/iot/iotest");
+		System.out.println(file1.list());
+		
+	}
+
+}

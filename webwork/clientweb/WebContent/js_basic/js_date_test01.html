@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<script type="text/javascript">
+		today = new Date();
+		document.write(today);
+		str = today.getFullYear() +"년 ";
+		str = str+(today.getMonth()+1) +"월 ";
+		str = str+today.getDate() +"일 ";
+		
+		switch(today.getDay())
+		{
+			case 1: str=str+"월요일 "
+			break;
+			case 2: str=str+"화요일 "
+			break;
+			case 3: str=str+"수요일 "
+			break;
+			case 4: str=str+"목요일 "
+			break;
+			case 5: str=str+"금요일 "
+			break;
+			case 6: str=str+"토요일 "
+			break;
+			default: str=str+"일요일 "
+		}
+		
+		str= str+today.getHours()+"시 ";
+		str= str+today.getMinutes()+"분 ";
+		str= str+today.getSeconds()+"초";
+		document.write(str);
+		myimg = "1.jpg";
+		document.write("<img src='../images/jang"+myimg+" '/>");
+		document.bgColor="yellow";
+		
+	</script>
+	
+</body>
+</html>

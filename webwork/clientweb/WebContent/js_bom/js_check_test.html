@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function allcheck() {
+		mychk = document.cbfmt.food;
+		allChkVal = cbfmt.allchk.checked;
+		/*
+		alert(mycheck);
+		alert(mycheck.length);
+		allChkVal = cbfmt.allchk.checked;
+		alert(allChkVal);
+		 */
+
+		// mydiv = document.getElementById("result");
+		// innerHTML은 문자열 컨텐츠를 추가할 목적으로 사용 - 기존의 컨텐츠 위에 출력된다.
+		// p, div, span 태그에서 사용한다.
+		for (i = 0; i < mychk.length; i++)
+			mychk[i].checked = allChkVal;
+	}
+	function ckFunc() {
+		mychk = cbfmt.food;
+		resultstr = "";
+		for (i = 0; i < mychk.length; i++) {
+			if (mychk[i].checked) {
+				resultstr += mychk[i].value + " ";
+			}
+		}
+		document.getElementById("result").innerHTML = resultstr;
+	}
+	function printtext() {
+		myvalue = cbfmt.test.value;
+		//alert(myvalue);
+		document.getElementById("result").innerHTML = "<h1>" + myvalue
+				+ "</h1>";
+	}
+</script>
+</head>
+<body>
+	<form name="cbfmt">
+		<label>아이스크림</label>
+		<input type="checkbox" name="food" value="아이스크림" id="ice">
+		<label>커피</label>
+		<input type="checkbox" name="food" value="커피" id="coffee">
+		<label>음료수</label>
+		<input type="checkbox" name="food" value="음료수" id="beverage">
+		<label>모두체크/해제</label>
+		<input type="checkbox" name="allchk" id="allchk" onclick="allcheck()">
+		<br>
+		<input type="button" value="전송" onclick="ckFunc()">
+		<input type="text" name="test" onkeyup="printtext()">
+	</form>
+	<div id="result"></div>
+</body>
+</html>

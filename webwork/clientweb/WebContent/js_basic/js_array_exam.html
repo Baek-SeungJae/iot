@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<script type="text/javascript">
+		korday = new Array("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일");
+		// korday = [];
+		today = new Date();
+		day = today.getDay();
+
+		document.write(today.toLocaleDateString());
+		document.write(" " + korday[day]);
+	</script>
+</body>
+</html>

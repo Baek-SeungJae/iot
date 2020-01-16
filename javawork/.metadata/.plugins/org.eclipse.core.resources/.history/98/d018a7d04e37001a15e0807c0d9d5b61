@@ -1,0 +1,12 @@
+package api.io;
+
+import java.io.FileInputStream;
+
+public class FileInputStreamTest {
+
+	public static void main(String[] args) {
+		File file = new File("test.txt");
+		FileInputStream fis = new FileInputStream();
+	}
+
+}
