@@ -18,7 +18,8 @@ public class DeleteServlet extends HttpServlet {
 		response.setContentType("text/html;charset=euc-kr");
 		DeptDAO dao = new DeptDAOImpl();
 		String deptno = request.getParameter("deptno");
-		System.out.println(deptno);
+		
+		
 		int result = dao.delete(deptno);
 		PrintWriter pw = response.getWriter();
 		pw.print("<h1>삭제성공</h1>");
