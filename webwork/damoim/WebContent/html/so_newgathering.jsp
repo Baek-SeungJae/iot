@@ -4,16 +4,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+<link href="../common/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style type="text/css">
 .container-fluid {
 	padding-left: 0px;
 	padding-right: 0px;
+}
+
+hr {
+	border: solid 0.05rem rgb(165, 165, 165);
 }
 </style>
 </head>
@@ -89,41 +93,66 @@
 		<div class="row">
 			<div class="col-xl-2">왼쪽 여백</div>
 			<!-- 왼쪽여백 끝 중앙 컨텐츠 시작 -->
-			<div class="col-xl-8">
-				<form method="post">
-					<textarea id="summernote" name="editordata"></textarea>
-				</form>
-				<script>
-					$('#summernote').summernote({
-						placeholder : 'Hello Bootstrap 4',
-						tabsize : 2,
-						height : 500
-					});
-				</script>
-				<br />
+			<div class="col-xl-8" style="background-color: rgb(245, 245, 245); padding: 3%;">
 				<div class="row">
-					<div class="col-xl-10">
-					
-						<button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit 1</button>
-						<button id="save" class="btn btn-primary" onclick="save()" type="button">Save 2</button>
-						<div class="click2edit">click2edit</div>
-						<script type="text/javascript">
-							var edit = function() {
-								$('.click2edit').summernote({
-									focus : true
-								});
-							};
-
-							var save = function() {
-								var markup = $('.click2edit')
-										.summernote('code');
-								$('.click2edit').summernote('destroy');
-							};
-						</script>
-						
+					<div class="col-xl-1">
+						<p class="lead oi oi-check" style="color: red;"></p>
 					</div>
 					<div class="col-xl-2">
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<p class="lead text-right">모임이름</p>
+					</div>
+					<div class="col-xl-9">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="내용을 입력해주세요.">
+							<small class="form-text text-muted">모임주제와 어울리는 이름으로 입력하면 많은 사람들이 모임을 찾기 쉬워집니다.</small>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-xl-1">
+						<p class="lead oi oi-check" style="color: red;"></p>
+					</div>
+					<div class="col-xl-2">
+						<p class="lead text-right">관심사</p>
+					</div>
+					<div class="col-xl-1"></div>
+					<div class="col-xl-3">
+						<div class="btn-group dropdown w-100">
+							<input type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true" value="관심사 선택" />
+							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 48px, 0px);">
+								<a class="dropdown-item" href="#">Action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Separated link</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-1"></div>
+					<div class="col-xl-3">
+						<div class="btn-group dropdown w-100">
+							<input type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true" value="관심사상세선택">
+							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 48px, 0px);">
+								<a class="dropdown-item" href="#">Action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Separated link</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-1"></div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-xl-1">
+						<p class="lead oi oi-check" style="color: red;"></p>
+					</div>
+					<div class="col-xl-2">
+						<p class="lead text-right">장소</p>
+					</div>
+					<div class="col-xl-1" style="padding-top: 3px; padding-bottom: 3px;">
+						<button type="button" class="btn btn-primary" onclick="#" style="font-size: 0.8vmax;">찾기</button>
+					</div>
+					<div class="col-xl-8">
+						<input type="text" class="form-control" value="" readonly>
 					</div>
 				</div>
 			</div>
