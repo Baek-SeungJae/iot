@@ -13,14 +13,14 @@ Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public  
 License along with this library; if not, write to the Free Software  
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA   
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA  
 */
 window.createSEditor2 = function(elIRField, htParams, elSeAppContainer){
 	if(!window.$Jindo){
-		parent.document.body.innerHTML="吏��� ���������� �����⑸����.<br>\n<a href='http://dev.naver.com/projects/jindo/download'>http://dev.naver.com/projects/jindo/download</a>���� Jindo 1.5.3 踰����� jindo.min.js瑜� �ㅼ�대��� 諛��� /js �대���� 蹂듭�� �� 二쇱�몄��.\n(��吏� Jindo 2 �� 吏�����吏� ���듬����.)";
+		parent.document.body.innerHTML="진도 프레임웍이 필요합니다.<br>\n<a href='http://dev.naver.com/projects/jindo/download'>http://dev.naver.com/projects/jindo/download</a>에서 Jindo 1.5.3 버전의 jindo.min.js를 다운로드 받아 /js 폴더에 복사 해 주세요.\n(아직 Jindo 2 는 지원하지 않습니다.)";
 		return;
 	}
-	
+
 	var elAppContainer = (elSeAppContainer || jindo.$("smart_editor2"));	
 	var elEditingArea = jindo.$$.getSingle("DIV.husky_seditor_editing_area_container", elAppContainer);
 	var oWYSIWYGIFrame = jindo.$$.getSingle("IFRAME.se2_input_wysiwyg", elEditingArea);
@@ -32,15 +32,15 @@ window.createSEditor2 = function(elIRField, htParams, elSeAppContainer){
 		htParams = {}; 
 		htParams.fOnBeforeUnload = null;
 	}
-	htParams.elAppContainer = elAppContainer;												// ������ UI 理����� element ���� 
-	htParams.oNavigator = jindo.$Agent().navigator();										// navigator 媛�泥� ����
+	htParams.elAppContainer = elAppContainer;												// 에디터 UI 최상위 element 셋팅 
+	htParams.oNavigator = jindo.$Agent().navigator();										// navigator 객체 셋팅
 	htParams.I18N_LOCALE = htParams.I18N_LOCALE || "ko_KR";
 
 	var oEditor = new nhn.husky.HuskyCore(htParams);
 	oEditor.registerPlugin(new nhn.husky.CorePlugin(htParams?htParams.fOnAppLoad:null));	
 	oEditor.registerPlugin(new nhn.husky.StringConverterManager());
 	if(htParams.bSkipXssFilter !== true){
-		// 蹂댁�� ���곕� ���ш렇�� (TODO:���ㅻ�由� 諛� 釉���由ъ�ㅽ�� �듭�� 異�媛�)
+		// 보안 필터링 플러그인 (TODO:소스분리 및 블랙리스트 옵션 추가)
 		oEditor.registerPlugin({
 			_rxFilter:/<\/*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*?>/gi,
 			$ON_REGISTER_CONVERTERS : function() {
@@ -68,10 +68,10 @@ window.createSEditor2 = function(elIRField, htParams, elSeAppContainer){
 	var aAdditionalFontList = htParams.aAdditionalFontList;
 	
 	oEditor.registerPlugin(new nhn.husky.SE_EditingAreaManager("WYSIWYG", oIRTextarea, htDimension,  htParams.fOnBeforeUnload, elAppContainer));
-	oEditor.registerPlugin(new nhn.husky.SE_EditingArea_WYSIWYG(oWYSIWYGIFrame));			// Tab Editor 紐⑤��
-	oEditor.registerPlugin(new nhn.husky.SE_EditingArea_HTMLSrc(oHTMLSrc));					// Tab HTML 紐⑤��
-	oEditor.registerPlugin(new nhn.husky.SE_EditingArea_TEXT(oTextArea));					// Tab Text 紐⑤��
-	oEditor.registerPlugin(new nhn.husky.SE2M_EditingModeChanger(elAppContainer, htConversionMode));	// 紐⑤��媛� 蹂�寃�(Editor, HTML, Text)
+	oEditor.registerPlugin(new nhn.husky.SE_EditingArea_WYSIWYG(oWYSIWYGIFrame));			// Tab Editor 모드
+	oEditor.registerPlugin(new nhn.husky.SE_EditingArea_HTMLSrc(oHTMLSrc));					// Tab HTML 모드
+	oEditor.registerPlugin(new nhn.husky.SE_EditingArea_TEXT(oTextArea));					// Tab Text 모드
+	oEditor.registerPlugin(new nhn.husky.SE2M_EditingModeChanger(elAppContainer, htConversionMode));	// 모드간 변경(Editor, HTML, Text)
 	oEditor.registerPlugin(new nhn.husky.SE_PasteHandler()); 								// WYSIWYG Paste Handler
 	
 	oEditor.registerPlugin(new nhn.husky.HuskyRangeManager(oWYSIWYGIFrame));
@@ -80,37 +80,37 @@ window.createSEditor2 = function(elIRField, htParams, elSeAppContainer){
 	oEditor.registerPlugin(new nhn.husky.SE_WYSIWYGStyler());
 	oEditor.registerPlugin(new nhn.husky.SE2M_Toolbar(elAppContainer));
 	
-	oEditor.registerPlugin(new nhn.husky.Hotkey());											// �⑥���
-	oEditor.registerPlugin(new nhn.husky.SE_EditingAreaVerticalResizer(elAppContainer, htConversionMode));	// �몄����� 由ъ�ъ�댁�
+	oEditor.registerPlugin(new nhn.husky.Hotkey());											// 단축키
+	oEditor.registerPlugin(new nhn.husky.SE_EditingAreaVerticalResizer(elAppContainer, htConversionMode));	// 편집영역 리사이즈
 	oEditor.registerPlugin(new nhn.husky.DialogLayerManager());
 	oEditor.registerPlugin(new nhn.husky.ActiveLayerManager());
-	oEditor.registerPlugin(new nhn.husky.SE_WYSIWYGStyleGetter());							// 而ㅼ�� ��移� �ㅽ���� ��蹂� 媛��몄�ㅺ린
+	oEditor.registerPlugin(new nhn.husky.SE_WYSIWYGStyleGetter());							// 커서 위치 스타일 정보 가져오기
 
-	oEditor.registerPlugin(new nhn.husky.SE_WYSIWYGEnterKey("P"));							// ���� �� 泥�由�, ���щ�� P濡� 泥�由�
+	oEditor.registerPlugin(new nhn.husky.SE_WYSIWYGEnterKey("P"));							// 엔터 시 처리, 현재는 P로 처리
 	
-	oEditor.registerPlugin(new nhn.husky.SE2M_ColorPalette(elAppContainer));				// ���� ������
-	oEditor.registerPlugin(new nhn.husky.SE2M_FontColor(elAppContainer));					// 湲�����
-	oEditor.registerPlugin(new nhn.husky.SE2M_BGColor(elAppContainer));						// 湲���諛곌꼍��
-	oEditor.registerPlugin(new nhn.husky.SE2M_FontNameWithLayerUI(elAppContainer, aAdditionalFontList));	// 湲�瑗댁�瑜�
-	oEditor.registerPlugin(new nhn.husky.SE2M_FontSizeWithLayerUI(elAppContainer));			// 湲�瑗댄�ш린
+	oEditor.registerPlugin(new nhn.husky.SE2M_ColorPalette(elAppContainer));				// 색상 팔레트
+	oEditor.registerPlugin(new nhn.husky.SE2M_FontColor(elAppContainer));					// 글자색
+	oEditor.registerPlugin(new nhn.husky.SE2M_BGColor(elAppContainer));						// 글자배경색
+	oEditor.registerPlugin(new nhn.husky.SE2M_FontNameWithLayerUI(elAppContainer, aAdditionalFontList));	// 글꼴종류
+	oEditor.registerPlugin(new nhn.husky.SE2M_FontSizeWithLayerUI(elAppContainer));			// 글꼴크기
 	
 	oEditor.registerPlugin(new nhn.husky.SE2M_LineStyler());								 
 	oEditor.registerPlugin(new nhn.husky.SE2M_ExecCommand(oWYSIWYGIFrame));
-	oEditor.registerPlugin(new nhn.husky.SE2M_LineHeightWithLayerUI(elAppContainer));		// 以�媛�寃�	
+	oEditor.registerPlugin(new nhn.husky.SE2M_LineHeightWithLayerUI(elAppContainer));		// 줄간격	
 
-	oEditor.registerPlugin(new nhn.husky.SE2M_Quote(elAppContainer));						// �몄�⑷뎄
-	oEditor.registerPlugin(new nhn.husky.SE2M_Hyperlink(elAppContainer));					// 留���
-	oEditor.registerPlugin(new nhn.husky.SE2M_SCharacter(elAppContainer));					// �뱀��臾몄��
-	oEditor.registerPlugin(new nhn.husky.SE2M_FindReplacePlugin(elAppContainer));			// 李얘린/諛�袁멸린
-	oEditor.registerPlugin(new nhn.husky.SE2M_TableCreator(elAppContainer));				// ���대� ����
-	oEditor.registerPlugin(new nhn.husky.SE2M_TableEditor(elAppContainer));					// ���대� �몄�
-	oEditor.registerPlugin(new nhn.husky.SE2M_TableBlockStyler(elAppContainer));			// ���대� �ㅽ����
+	oEditor.registerPlugin(new nhn.husky.SE2M_Quote(elAppContainer));						// 인용구
+	oEditor.registerPlugin(new nhn.husky.SE2M_Hyperlink(elAppContainer));					// 링크
+	oEditor.registerPlugin(new nhn.husky.SE2M_SCharacter(elAppContainer));					// 특수문자
+	oEditor.registerPlugin(new nhn.husky.SE2M_FindReplacePlugin(elAppContainer));			// 찾기/바꾸기
+	oEditor.registerPlugin(new nhn.husky.SE2M_TableCreator(elAppContainer));				// 테이블 생성
+	oEditor.registerPlugin(new nhn.husky.SE2M_TableEditor(elAppContainer));					// 테이블 편집
+	oEditor.registerPlugin(new nhn.husky.SE2M_TableBlockStyler(elAppContainer));			// 테이블 스타일
 	if(nhn.husky.SE2M_AttachQuickPhoto){
-		oEditor.registerPlugin(new nhn.husky.SE2M_AttachQuickPhoto(elAppContainer));			// �ъ�			
+		oEditor.registerPlugin(new nhn.husky.SE2M_AttachQuickPhoto(elAppContainer));			// 사진			
 	}
 
 	oEditor.registerPlugin(new nhn.husky.MessageManager(oMessageMap, htParams.I18N_LOCALE));
-	oEditor.registerPlugin(new nhn.husky.SE2M_QuickEditor_Common(elAppContainer));			// �듭������ 怨듯��(��, �대�몄�)
+	oEditor.registerPlugin(new nhn.husky.SE2M_QuickEditor_Common(elAppContainer));			// 퀵에디터 공통(표, 이미지)
 	
 	oEditor.registerPlugin(new nhn.husky.SE2B_CSSLoader());									// CSS lazy load
 	if(window.frameElement){
@@ -118,7 +118,7 @@ window.createSEditor2 = function(elIRField, htParams, elSeAppContainer){
 	}
 	
 	oEditor.registerPlugin(new nhn.husky.SE_ToolbarToggler(elAppContainer, htParams.bUseToolbar));
-	oEditor.registerPlugin(new nhn.husky.SE2M_Accessibility(elAppContainer, htParams.I18N_LOCALE));	// �����곕�댁�� �뱀��洹쇱�� 愿��� 湲곕�λえ�� ���ш렇�� 
-	oEditor.registerPlugin(new nhn.husky.SE2M_AttachQuickPhoto(elAppContainer));
+	oEditor.registerPlugin(new nhn.husky.SE2M_Accessibility(elAppContainer, htParams.I18N_LOCALE));	// 에디터내의 웹접근성 관련 기능모음 플러그인 
+
 	return oEditor;
 };
