@@ -26,15 +26,18 @@
 				DeptDTO dept = dto.get(i);
 				%>
 				<tr>
+				
 				<td><%= dept.getDeptno() %></td>
-				<td><%= dept.getDeptname() %></td>
+				<td><a href="/serverweb/dept/read.do?deptNo=<%=dept.getDeptno() %>"><%= dept.getDeptname() %></a></td>
 				<td><%= dept.getLoc() %></td>
 				<td><%= dept.getTel() %></td>
 				<td><%= dept.getMgr() %></td>
 				<td><a href='/serverweb/dept/delete.do?deptno=<%=dept.getDeptno()%>'>ªË¡¶</a></td><tr>
+				
 				<%
 			}
 		%>
 	</table>
+
 </body>
 </html>

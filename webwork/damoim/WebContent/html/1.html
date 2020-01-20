@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<!-- 
+<link type="text/css" rel="stylesheet" href="../common/css/several-gathering.css" media="screen" />
+ -->
+<style type="text/css">
+.outer {
+	width: 80%;
+	margin: auto;
+	box-sizing:border-box;
+	background-color: rgb(0, 0, 255);
+}
+
+.head {
+	width: 100%;
+	height: 200px;
+	box-sizing:border-box;
+	background-color: rgb(255, 255, 255);
+	background-repeat: no-repeat;
+	background-position: center;
+	
+	margin-bottom: 20px;
+	/*위치잡기 표시용*/
+	border: solid 1px black;
+	/* background-size: 100%; */
+}
+
+.head #title {
+	width: 50%;
+	height: 50%;
+	box-sizing:border-box;
+	position:relative;
+	top:25%;
+	left:25%;
+	background-color: yellow;
+	text-align: center;
+	font-size: 8vmax;
+}
+
+.left-side {
+	background-color: rgb(255, 255, 255);
+	float: left;
+	height: 300px;
+	width: 25%;
+	margin: auto;
+	/*위치잡기 표시용*/
+	border: solid 1px black;
+}
+
+#left-sid-btn {
+	width: 80%;
+	height: 20%;
+	margin: auto;
+	margin-top: 10%;
+}
+
+#gathering {
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	margin-top: 10%;
+	background-color: rgb(0, 255, 0);
+}
+
+#myinfo {
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	margin-top: 10%;
+	background-color: rgb(255, 255, 0);
+}
+
+.right-side {
+	background-color: rgb(255, 255, 255);
+	float: right;
+	height: 800px;
+	width: 70%;
+	margin: auto;
+	/*위치잡기 표시용*/
+	border: solid 1px black;
+}
+
+#right-side-image {
+	background-size: contain;
+	width: 100%;
+	height: -webkit-fill-available;
+	background-color: rgba(255, 255, 255, 0.5);
+	background-repeat: no-repeat;
+	margin-bottom: 20px;
+	/*위치잡기 표시용*/
+	border: solid 1px black;
+	/* background-size: 100%; */
+}
+
+#right-side-notice {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+#images {
+	width: 100%;
+	opacity: 0.5;
+}
+
+#footer {
+	background-color: rgb(255, 0, 255);
+	width: 100%;
+}
+</style>
+</head>
+<body>
+	<div class="outer">
+		<div class="head" style="background-image: url(../common/images/1_title.png);">
+			<div id="title">1</div>
+		</div>
+		<div class="left-side">
+			<div id="left-side-btn">
+				<input type="button" value="카페정보" />
+				<input type="button" value="내 정보" />
+			</div>
+			<div id="gathering">
+				<div>별점</div>
+				<div>회원수</div>
+			</div>
+			<div id="myinfo"></div>
+		</div>
+		<div class="right-side">
+			<div id="right-side-image">
+				<!-- <div id="right-side-image" style="background-image: url(../common/images/1_main.png);"> -->
+				<img src="../common/images/1_main.png" id="images" />
+				<p id="right-side-notice">쓰고싶은 내용을 쓸 수 있다.</p>
+			</div>
+		</div>
+		<div id="footer"></div>
+	</div>
+</body>
+</html>

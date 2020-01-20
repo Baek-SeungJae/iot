@@ -1,1 +1,1 @@
-select * from mydept;
+select * from MEMBER;
