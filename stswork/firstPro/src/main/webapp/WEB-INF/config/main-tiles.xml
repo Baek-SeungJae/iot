@@ -9,5 +9,13 @@
 		<put-attribute name="menu" value="/WEB-INF/menu/spring_jdbc.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/template/content.jsp"/>
 	</definition>
-
+	<definition name="index" extends="mainTemplate">
+	<!-- 변경될 내용이 없으므로 아무것도 안적어도 된다.  -->
+	</definition>
+	<definition name="menu/mybatis" extends="mainTemplate">
+		<put-attribute name="menu" value="/WEB-INF/menu/mybatis_menu.jsp"/>
+	</definition>
+	<definition name="menu/advanced" extends="mainTemplate">
+		<put-attribute name="menu" value="/WEB-INF/menu/advanced_menu.jsp"/>
+	</definition>
 </tiles-definitions>

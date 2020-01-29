@@ -8,6 +8,6 @@
 </head>
 <body>
 	<img alt="" src="/firstPro/resource/images/jang.jpg">
-	<img alt="" src="/firstPro/images/jang.jpg">
+	<img alt="" src="/firstPro/resource/images/jang.jpg">
 </body>
 </html>

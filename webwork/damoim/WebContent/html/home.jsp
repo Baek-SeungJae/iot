@@ -13,7 +13,7 @@
 }
 </style>
 </head>
-<body class="">
+<body class="" style="background-color: #FF399B;">
 	<!-- 상단 head 시작 -->
 	<div class="container-fluid">
 		<div class="row">
@@ -131,7 +131,7 @@
 				<br />
 				<br />
 				<!-- 게시물 시작 -->
-				<div class="table-responsive" style="padding-left: 5%; padding-right: 5%;">
+				<div class="table-responsive" style="padding-left: 5%; padding-right: 5%; background-color: white;">
 					<table class="table" style="font-size: 1vmax">
 						<thead>
 							<tr>

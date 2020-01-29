@@ -54,10 +54,10 @@
 	<div class="container-fluid">
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/annotation/index.do">Home</a></li>
-					<li><a href="/annotation/menu/jdbc.do">스프링JDBC</a></li>
-					<li><a href="/annotation/menu/mybatis.do">myBatis</a></li>
-					<li><a href="/annotation/menu/advanced.do">고급기능</a></li>
+					<li class="active"><a href="/firstPro/exam/index.do">Home</a></li>
+					<li><a href="/firstPro/menu/jdbc.do">스프링JDBC</a></li>
+					<li><a href="/firstPro/menu/mybatis.do">myBatis</a></li>
+					<li><a href="/firstPro/menu/advanced.do">고급기능</a></li>
 					
 				</ul>
 

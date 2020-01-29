@@ -96,7 +96,7 @@ hr {
 			<div class="col-xl-8" style="background-color: rgb(245, 245, 245); padding: 3%;">
 				<div class="row">
 					<div class="col-xl-1">
-						<p class="lead oi oi-check" style="color: red;"></p>
+						<p class="lead oi oi-check" style="color: #FF399B;"></p>
 					</div>
 					<div class="col-xl-2">
 						<p class="lead text-right">모임이름</p>
@@ -111,50 +111,88 @@ hr {
 				<hr />
 				<div class="row">
 					<div class="col-xl-1">
-						<p class="lead oi oi-check" style="color: red;"></p>
+						<p class="lead oi oi-check" style="color: #FF399B;"></p>
 					</div>
 					<div class="col-xl-2">
 						<p class="lead text-right">관심사</p>
 					</div>
-					<div class="col-xl-1"></div>
 					<div class="col-xl-3">
-						<div class="btn-group dropdown w-100">
-							<input type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true" value="관심사 선택" />
-							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 48px, 0px);">
-								<a class="dropdown-item" href="#">Action</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Separated link</a>
-							</div>
-						</div>
+						<label for="sel1">관심사:</label>
+						<select class="form-control" id="sel1" name="sellist1">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+						</select>
 					</div>
 					<div class="col-xl-1"></div>
 					<div class="col-xl-3">
-						<div class="btn-group dropdown w-100">
-							<input type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true" value="관심사상세선택">
-							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 48px, 0px);">
-								<a class="dropdown-item" href="#">Action</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Separated link</a>
-							</div>
-						</div>
+						<label for="sel1">세부분류:</label>
+						<select class="form-control" id="sel1" name="sellist1">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+						</select>
 					</div>
-					<div class="col-xl-1"></div>
+					<div class="col-xl-2"></div>
 				</div>
 				<hr />
 				<div class="row">
 					<div class="col-xl-1">
-						<p class="lead oi oi-check" style="color: red;"></p>
+						<p class="lead oi oi-check" style="color: #FF399B;"></p>
 					</div>
 					<div class="col-xl-2">
 						<p class="lead text-right">장소</p>
 					</div>
-					<div class="col-xl-1" style="padding-top: 3px; padding-bottom: 3px;">
-						<button type="button" class="btn btn-primary" onclick="#" style="font-size: 0.8vmax;">찾기</button>
+					<div class="col-xl-2" style="padding-top: 3px; padding-bottom: 3px;">
+						<button type="button" class="btn btn-primary" onclick="#" style="font-size: 1vmax; background-color: #FF399B; border-color: #FF399B;">찾기</button>
 					</div>
-					<div class="col-xl-8">
+					<div class="col-xl-7">
 						<input type="text" class="form-control" value="" readonly>
 					</div>
 				</div>
+				<hr />
+				<div class="row">
+					<div class="col-xl-3">
+						<p class="lead text-right">이름사용여부</p>
+					</div>
+					<div class="col-xl-9">
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="optradio">
+								이름사용
+							</label>
+						</div>
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="optradio">
+								별명사용
+							</label>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-xl-3">
+						<p class="lead text-right">검색키워드</p>
+					</div>
+					<div class="col-xl-9">
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="optradio">
+								이름사용
+							</label>
+						</div>
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="optradio">
+								별명사용
+							</label>
+						</div>
+					</div>
+				</div>
+				<hr />
 			</div>
 			<!-- 중앙컨텐츠 끝 오른쪽 여백시작 -->
 			<div class="col-xl-2">오른쪽 여백</div>
