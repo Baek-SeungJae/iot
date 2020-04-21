@@ -25,8 +25,20 @@
 	</definition>
 	
 	<definition name="login" extends="mainTemplate">
+		<put-attribute name="top" value="/WEB-INF/include/top.jsp"/>
+		<put-attribute name="menu" value="/WEB-INF/menu/pub_menu.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/emp/login.jsp"/>
 	</definition>
-	
+	<definition name="login/ok" extends="mainTemplate">
+		<put-attribute name="top" value="/WEB-INF/include/top.jsp"/>
+		<put-attribute name="menu" value="/WEB-INF/menu/insa_menu.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/emp/mypage.jsp"/>
+	</definition>
+	<definition name="emp/insert" extends="mainTemplate">
+		<put-attribute name="top" value="/WEB-INF/include/top.jsp"/>
+		<put-attribute name="menu" value="/WEB-INF/menu/insa_menu.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/dept/register.jsp"/>
+	</definition>
 <!-- 	<definition name="menu/board" extends="mainTemplate">
 		<put-attribute name="menu" value="/WEB-INF/menu/board_menu.jsp" />
 		<put-attribute name="content" value="/WEB-INF/board/boardlist.jsp" />

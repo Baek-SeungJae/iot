@@ -22,6 +22,45 @@
 
 </style>
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(document).ready(function() {
+		//id속성이 boardCategory로 정의된 모든 엘리먼트의 하위엘리먼트인 li에 동일한 작업을 처리하겠다는 의미
+		$("#boardcategory>li").each(function(){
+			$(this).on("click",function(){
+				category = $(this).text();
+				//alert("선택됨"+category);
+				/*
+					ajax메소드를 이용해서 ajax요청
+					url:ajax통신하기 위해 요청하는 path
+					type : 요청방식(get or post)
+					data : 요청할 떄 컨트롤러로 넘길 데이터
+					success : 요청이 성공하고 처리한 데이터를 넘겨 받은 후 어떤 방법으로 처리할 것인지 구현(함수명이나 익명함수로)
+				*/
+				$("#boardcategory>li").removeAttr("class");
+				$(this).attr("class","active");
+				$.ajax({
+					"url":"/erp/board/ajax_boardlist.do",
+					type:"get",
+					data:{
+						"category":category
+						},
+					success:function(data){
+						//alert(data[0].title);
+						mydata ="";
+						//ajax통신으로 받은 data(json객체)에서 값을 꺼내서 출력
+							for(i=0;i<data.length;i++){
+								mydata += "<tr><td class='boardContent'>"+data[i].title+"</td>"
+								+"<td class='boardDate'>"+data[i].write_date+"</td></tr>";
+							}
+						$("#mydatalist").empty();
+						$("#mydatalist").append(mydata);
+					}
+						
+				})
+			});
+		});
+	});
+</script>
 </head>
 <body>
 	<div class="container">
@@ -80,29 +119,13 @@
 					style="border-color: #edeef1; height: 300px; width: 450px">
 					<div class="panel-footer">사내소식</div>
 					<div class="panel-body">
-						<ul class="nav nav-tabs">
-							<li class="active"><a href="#">최근게시판</a></li>
-							<li><a href="#">업무공지</a></li>
+						<ul class="nav nav-tabs" id="boardcategory">
+							<li><a href="#">게시판</a></li>
+							<li><a href="#">사내소식</a></li>
 							<li><a href="#">경조사</a></li>
 						</ul>
 						<div id="boardMain" style="padding-top: 20px; padding-left: 10px">
-							<table>
-								<tr>
-									<td class="boardContent" style="">mini프로젝트 개최</td>
-									<td class="boardDate" style="">2020.02.10</td>
-								</tr>
-								<tr>
-									<td class="boardContent" style="">kimsaemERP ver2.0출시</td>
-									<td class="boardDate" style="">2020.01.29</td>
-								</tr>
-								<tr class="boardRow">
-									<td class="boardContent">사옥 이전날짜 확정</td>
-									<td class="boardDate">2020.04.11</td>
-								</tr>
-								<tr class="boardRow">
-									<td class="boardContent">보안의 날 참석 인원 확정</td>
-									<td class="boardDate">2020.08.11</td>
-								</tr>
+							<table id="mydatalist">
 								<!-- <tr class="boardRow">
 									<td class="boardContent" >2차 프로젝트 발표 날짜 확정 통보</td>
 									<td class="boardDate">2018.07.10</td>
