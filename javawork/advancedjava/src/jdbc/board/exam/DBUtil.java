@@ -23,7 +23,7 @@ public class DBUtil {
 	
 	public static Connection getConnect() {
 		Connection con = null;
-		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
+		String url = "jdbc:oracle:thin:@70.12.224.117:1521:xe";
 		String user = "scott";
 		String password = "tiger";
 		try {

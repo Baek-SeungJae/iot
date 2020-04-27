@@ -110,12 +110,12 @@ public class BoardDAOImpl implements BoardDAO{
 			ptmt =  con.prepareStatement(sql);
 			rs = ptmt.executeQuery();
 			while(rs.next()) {
-				/*System.out.print(rs.getInt(1)+"\t");
+				System.out.print(rs.getInt(1)+"\t");
 				System.out.print(rs.getString(2)+"\t");
 				System.out.print(rs.getString(3)+"\t");
 				System.out.print(rs.getString(4)+"\t");
 				System.out.print(rs.getDate(5)+"\t");
-				System.out.println(rs.getInt(6));*/
+				System.out.println(rs.getInt(6));
 				board = new BoardDTO(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getInt(6));
 				boardlist.add(board);
 			}	
