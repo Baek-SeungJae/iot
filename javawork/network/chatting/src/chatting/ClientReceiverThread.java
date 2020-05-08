@@ -12,15 +12,15 @@ public class ClientReceiverThread implements Runnable {
 
 	@Override
 	public void run() {
-		while(true) {
-		try {
-			resMsg = in.readLine();
-			if(resMsg==null||resMsg.equals("")) {
-				break;
+		while (true) {
+			try {
+				resMsg = in.readLine();
+				if (resMsg == null || resMsg.equals("")) {
+					break;
+				}
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½>>" + resMsg);
+			} catch (Exception e) {
 			}
-			System.out.println("¼­¹ö°¡ º¸³»¿Â ¸Þ½ÃÁö>>" + resMsg);
-		} catch (Exception e) {
-		}
 		}
 	}
 }

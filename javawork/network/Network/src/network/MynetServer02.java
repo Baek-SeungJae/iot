@@ -17,14 +17,13 @@ public class MynetServer02 {
 		OutputStream os = null;
 		DataOutputStream dos = null;
 		try {
-			// Å¬¶óÀÌ¾ğÆ®¿Í Åë½ÅÇÒ ¼ö ÀÖµµ·Ï ÁØºñ
 			ServerSocket server = new ServerSocket(12345);
 			while (true) {
-				// Å¬¶óÀÌ¾ğÆ®°¡ Á¢¼ÓÇÒ ¶§±îÁö ´ë±â
-				// Å¬¶óÀÌ¾ğÆ®°¡ Á¢¼ÓÇÏ¸é Á¢¼ÓÇÑ Å¬¶óÀÌ¾ğÆ®ÀÇ ¼ÒÄÏ °´Ã¼¸¦ ¸®ÅÏ
+				// Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+				// Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				client = server.accept();
 				InetAddress clienctInfo = client.getInetAddress();
-				System.out.println("Á¢¼ÓÇÑ Å¬¶óÀÌ¾ğÆ®:" + clienctInfo.getHostAddress());
+				System.out.println("ì„œë²„ì ‘ì†ì™„ë£Œ:" + clienctInfo.getHostAddress());
 				//
 				is = client.getInputStream();
 				dis = new DataInputStream(is);
@@ -32,15 +31,13 @@ public class MynetServer02 {
 				os = client.getOutputStream();
 				dos = new DataOutputStream(os);
 				
-				// 1. ¼­¹ö -> Å¬¶óÀÌ¾ğÆ®
-				dos.writeUTF(clienctInfo.getHostAddress()+"´Ô Á¢¼ÓÀ» È¯¿µÇÕ´Ï´Ù.");
+				// 1. ï¿½ï¿½ï¿½ï¿½ -> Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®
+				dos.writeUTF(clienctInfo.getHostAddress()+"ë‹˜ ì ‘ì†ì„ í™˜ì˜í•©ë‹ˆë‹¤.");
 				dos.writeInt(20000);
-				
-				
-				
-				
+				System.out.println(dis.readUTF());
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}

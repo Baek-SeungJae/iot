@@ -42,7 +42,7 @@ class MyNetClient4 {
 			while ((line = reader.readLine()) != null) {
 				result += line;
 			}
-		} catch (Exception e) {s
+		} catch (Exception e) {
 
 		} finally {
 			try {

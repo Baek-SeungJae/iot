@@ -15,11 +15,11 @@ class MyNetClient02 {
 		OutputStream os = null;
 		DataOutputStream dos = null;
 		
-		//¼­¹ö¿Í Åë½ÅÇÒ ¼ö ÀÖ´Â ¼ÒÄÏ °´Ã¼¸¦ »ı¼º
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		try {
-			Socket socket = new Socket("70.12.115.59",12345);
+			Socket socket = new Socket("70.12.224.117",12345);
 			//Socket socket = new Socket("70.12.224.117",12345);
-			System.out.println("¼­¹öÁ¢¼Ó¿Ï·á");
+			System.out.println("ì„œë²„ì ‘ì†ì™„ë£Œ");
 			
 			is = socket.getInputStream();
 			dis = new DataInputStream(is);
@@ -29,9 +29,9 @@ class MyNetClient02 {
 			
 			// 1.
 			String data = dis.readUTF();
-			System.out.println("¼­¹ö°¡ Àü¼ÛÇÏ´Â ¸Ş½ÃÁö1: "+data);
+			System.out.println("ì„œë²„ê°€ ì „ì†¡í•˜ëŠ” ë©”ì‹œì§€1: "+data);
 			String intdata = dis.readInt()+"";
-			System.out.println("¼­¹ö°¡ Àü¼ÛÇÏ´Â ¸Ş½ÃÁö2:" +intdata);
+			System.out.println("ì„œë²„ê°€ ì „ì†¡í•˜ëŠ” ë©”ì‹œì§€2:" +intdata);
 			
 			
 			
