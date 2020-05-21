@@ -46,7 +46,7 @@ public class ClientChatView extends JFrame {
 	 * Create the frame.
 	 */
 	Vector<String> nicknamelist = new Vector<>();
-	
+
 	StringTokenizer st;
 
 	public ClientChatView(String ip, int port, String nickname) {
@@ -62,12 +62,12 @@ public class ClientChatView extends JFrame {
 
 		taChat = new JTextArea();
 		taChat.setBounds(12, 10, 501, 375);
-		//contentPane.add(taChat);
+		// contentPane.add(taChat);
 
 		JScrollPane scroll = new JScrollPane(taChat);
 		scroll.setBounds(12, 10, 501, 375);
 		contentPane.add(scroll);
-		
+
 		txtinput = new JTextField();
 		txtinput.setBounds(12, 395, 378, 35);
 		contentPane.add(txtinput);
@@ -84,10 +84,10 @@ public class ClientChatView extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		lstconnect = new JList();
-		lstconnect.setBounds(525, 47, 205, 108);		
+		lstconnect.setBounds(525, 47, 205, 108);
 		contentPane.add(lstconnect);
 		lstconnect.setListData(nicknamelist);
-		
+
 		setVisible(true); // 화면에 j프레임을 추가
 		ClientChatListener listener = new ClientChatListener(this);
 		txtinput.addActionListener(listener);
@@ -107,7 +107,7 @@ public class ClientChatView extends JFrame {
 				@Override
 				public void run() {
 					while (true) {
-						String msg="";
+						String msg = "";
 						try {
 							msg = br.readLine();
 							filteringMsg(msg);
@@ -120,8 +120,8 @@ public class ClientChatView extends JFrame {
 								pw.close();
 								socket.close();
 								break;
-							} catch(IOException e1) {
-								
+							} catch (IOException e1) {
+
 							}
 						}
 					}
@@ -135,32 +135,34 @@ public class ClientChatView extends JFrame {
 	}
 
 	private void filteringMsg(String msg) {
-		st = new StringTokenizer(msg,"/");
+		st = new StringTokenizer(msg, "/");
 		String protocol = st.nextToken();
 		String message = st.nextToken();
-		System.out.println(protocol +","+message);
-		
-		if(protocol.equals("new")) {
+		System.out.println(protocol + "," + message);
+
+		if (protocol.equals("new")) {
 			nicknamelist.add(message);
 			lstconnect.setListData(nicknamelist);
-			taChat.append("***********"+message+"님이 입장하셨습니다.\n");
-			
+			taChat.append("***********" + message + "님이 입장하셨습니다.\n");
+
 		} else if (protocol.equals("old")) {
 			nicknamelist.add(message);
 			lstconnect.setListData(nicknamelist);
 		} else if (protocol.equals("chatting")) {
-			taChat.append(message+"\n");
+			if (message != null) {
+				taChat.append(message + "\n");
+			}
 		} else if (protocol.equals("out")) {
 			nicknamelist.remove(message);
 			lstconnect.setListData(nicknamelist);
-			taChat.append("***********"+message+"님이 퇴장하셨습니다.\n");
+			taChat.append("***********" + message + "님이 퇴장하셨습니다.\n");
 			try {
 				socket.close();
 			} catch (IOException e) {
 			}
 		}
 	}
-	
+
 	public void ioWork() {
 		try {
 			is = socket.getInputStream();
@@ -169,7 +171,7 @@ public class ClientChatView extends JFrame {
 
 			os = socket.getOutputStream();
 			pw = new PrintWriter(os, true);
-			
+
 		} catch (IOException e) {
 		}
 	}

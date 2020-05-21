@@ -18,7 +18,7 @@ public class ChatLogin extends JFrame {
 	JComboBox cboServer;
 	JComboBox cboPort;
 	JButton btnConnect;
-	String[] ip = { "70.12.224.117", "127.0.0.1" ,"70.12.116.88"};
+	String[] ip = { "70.12.224.117", "127.0.0.1" ,"70.12.116.88","14.47.113.175"};
 	String[] port = { "12345" };
 
 	/**

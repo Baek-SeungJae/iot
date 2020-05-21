@@ -44,28 +44,29 @@ public class User extends Thread {
 
 			nickname = br.readLine();
 			serverView.taclientlist.append("***********" + nickname + "님이 입장**********\n");
-			broadcast("new/"+nickname);
+			broadcast("new/" + nickname);
 			int size = userlist.size();
-			for(int i=0; i<size; i++) {
+			for (int i = 0; i < size; i++) {
 				User user = userlist.get(i);
-				sendMsg("old/"+user.nickname);
+				sendMsg("old/" + user.nickname);
 			}
 			userlist.add(this);
 		} catch (IOException e) {
 		}
 	}
+
 	public void broadcast(String msg) {
 		int size = userlist.size();
-		for(int i=0; i<size; i++) {
+		for (int i = 0; i < size; i++) {
 			User user = userlist.get(i);
 			user.sendMsg(msg);
 		}
 	}
-	
+
 	public void sendMsg(String msg) {
 		pw.println(msg);
 	}
-	
+
 	public BufferedReader getBr() {
 		return br;
 	}
@@ -87,24 +88,28 @@ public class User extends Thread {
 		while (true) {
 			try {
 				String resMsg = br.readLine();
-				serverView.taclientlist.append(nickname + " : " + resMsg + "\n");
-				int size = userlist.size();
-				for(int i=0; i<size; i++) {
-					User user = userlist.get(i);
-					user.sendMsg("chatting/"+nickname+" : "+resMsg);
+				if (resMsg != null) {
+					System.out.println(resMsg);
+					serverView.taclientlist.append(nickname + " : " + resMsg + "\n");
+					int size = userlist.size();
+					for (int i = 0; i < size; i++) {
+						User user = userlist.get(i);
+						user.sendMsg("chatting/" + nickname + " : " + resMsg);
+					}
 				}
 			} catch (Exception e) {
 				try {
-					serverView.taclientlist.append(nickname + "의 접속이 끊어짐"+"\n");
+					serverView.taclientlist.append(nickname + "의 접속이 끊어짐" + "\n");
 					is.close();
 					ir.close();
 					br.close();
 					os.close();
 					pw.close();
 					userlist.remove(this);
-					broadcast("out/"+nickname);
-				} catch(IOException e1) {
-					
+					broadcast("out/" + nickname);
+					break;
+				} catch (IOException e1) {
+					break;
 				}
 			}
 		}
